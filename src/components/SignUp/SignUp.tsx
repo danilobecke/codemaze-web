@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 
@@ -8,6 +9,7 @@ import { clearInput, getInputValue } from '../../services/Helpers';
 import PasswordButton from '../PasswordButton/PasswordButton';
 import { User } from '../../models/User';
 import ErrorToast from '../ErrorToast/ErrorToast';
+import Session from '../../services/Session';
 
 function RoleSelector(props: { setRole: (role: Role) => void, show: boolean, close: () => void }) {
     return (
@@ -32,6 +34,8 @@ function SingUpInput(props: { role: Role, show: boolean, close: () => void }) {
     const [passwordError, setPasswordError] = useState(false)
     const [passwordValidationError, setPasswordValidationError] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+    const navigate = useNavigate()
 
     const roleName = () => {
         let result = ''
@@ -63,7 +67,7 @@ function SingUpInput(props: { role: Role, show: boolean, close: () => void }) {
         if (!name || !email || !password || !passwordValidation) {
             return
         }
-        const hasPasswordError = password != passwordValidation
+        const hasPasswordError = password !== passwordValidation
         setPasswordError(hasPasswordError)
         setPasswordValidationError(hasPasswordError)
         if (hasPasswordError) {
@@ -85,6 +89,9 @@ function SingUpInput(props: { role: Role, show: boolean, close: () => void }) {
         }
         try {
             const user = await post(url, body, User, false)
+            Session.logIn(user)
+            close()
+            navigate('/groups')
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(error.message)

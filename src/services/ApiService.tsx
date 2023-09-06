@@ -1,3 +1,5 @@
+import Session from "./Session";
+
 // Base URL
 const base_url = 'http://127.0.0.1:48345'
 
@@ -30,9 +32,13 @@ function getJSONRequestOptions(method: Method, authenticated: boolean, body?: Ob
         requestOptions.body = JSON.stringify(body)
     }
     if (authenticated) {
+        const user = Session.getCurrentUser()
+        if (!user) {
+            throw Error('Sign in before proceeding with this request.')
+        }
         requestOptions.headers = {
             ...requestOptions.headers,
-            'Authorization': 'Bearer ' + 'TODO'
+            'Authorization': 'Bearer ' + user.token
         };
     }
     return requestOptions

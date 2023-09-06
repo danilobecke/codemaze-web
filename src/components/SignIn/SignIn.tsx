@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { User } from '../../models/User';
 import { v1Namespace, post } from '../../services/ApiService';
@@ -7,6 +8,7 @@ import { getInputValue, clearInput } from '../../services/Helpers';
 
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import ErrorToast from '../ErrorToast/ErrorToast';
+import Session from '../../services/Session';
 
 function SignIn(props: { show: boolean, close: () => void }) {
     const emailName = 'email_signin'
@@ -15,6 +17,8 @@ function SignIn(props: { show: boolean, close: () => void }) {
     const [emailError, setEmailError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+    const navigate = useNavigate()
 
     function onClose() {
         clearInput(emailName)
@@ -36,6 +40,9 @@ function SignIn(props: { show: boolean, close: () => void }) {
         }
         try {
             const user = await post(url, body, User, false)
+            Session.logIn(user)
+            onClose()
+            navigate('/groups')
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(error.message)
