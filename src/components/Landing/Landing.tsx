@@ -8,6 +8,7 @@ import SignUp from '../SignUp/SignUp';
 import { Button, Stack, Typography } from '@mui/material';
 
 import './Landing.css';
+import Translator from '../Translator/Translator';
 
 function Landing() {
     const navigate = useNavigate()
@@ -30,8 +31,8 @@ function Landing() {
         <div>
             <nav className='Landing-nav'>
                 <Stack direction={'row'} justifyContent={'flex-end'} spacing={1}>
-                    <Button onClick={openSignUp} variant='outlined' size='large' color='inherit'>Sign Up</Button>
-                    <Button onClick={openSignIn} variant='contained' size='large'>Sign In</Button>
+                    <Button onClick={openSignUp} variant='outlined' size='large' color='inherit'><Translator path='landing.sign_up' /></Button>
+                    <Button onClick={openSignIn} variant='contained' size='large'><Translator path='landing.sign_in' /></Button>
                 </Stack>
             </nav>
             <div className='Landing-content'>

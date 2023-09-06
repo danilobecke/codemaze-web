@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+
 import { User } from '../../models/User';
 import { v1Namespace, post } from '../../services/ApiService';
 import PasswordButton from '../PasswordButton/PasswordButton';
 import { getInputValue, clearInput } from '../../services/Helpers';
-
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import ErrorToast from '../ErrorToast/ErrorToast';
 import Session from '../../services/Session';
+import Translator from '../Translator/Translator';
 
 function SignIn(props: { show: boolean, close: () => void }) {
     const emailName = 'email_signin'
@@ -55,14 +56,14 @@ function SignIn(props: { show: boolean, close: () => void }) {
     return (
         <div>
             <Dialog open={props.show} onClose={onClose}>
-                <DialogTitle>Sign In</DialogTitle>
+                <DialogTitle><Translator path='sign_in.title' /></DialogTitle>
                 <DialogContent>
-                    <TextField error={emailError} fullWidth required label='Email' type='email' name={emailName} variant="standard"></TextField><br />
-                    <PasswordButton title='Password' name={passwordName} error={passwordError} />
+                    <TextField error={emailError} fullWidth required label={Translator({'path': 'sign_in.email'})} type='email' name={emailName} variant="standard"></TextField><br />
+                    <PasswordButton title={Translator({'path': 'sign_in.password'})} name={passwordName} error={passwordError} />
                 </DialogContent>
                 <DialogActions>
-                    <Button variant='text' onClick={onClose}>Cancel</Button>
-                    <Button variant='contained' onClick={submit}>Send</Button>
+                    <Button variant='text' onClick={onClose}><Translator path='buttons.cancel' /></Button>
+                    <Button variant='contained' onClick={submit}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
             <ErrorToast message={errorMessage} setError={setErrorMessage}/>
