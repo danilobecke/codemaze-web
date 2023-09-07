@@ -30,5 +30,8 @@ export default {
             inactive: 'Inactive',
             empty: 'No groups...',
         },
+        profile: {
+            logOut: 'Log Out',
+        },
     }
 }

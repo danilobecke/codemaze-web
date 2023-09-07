@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { Button, Typography } from '@mui/material';
+
 import Session from '../../services/Session';
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
-
-import { Button, Stack, Typography } from '@mui/material';
-
-import './Landing.css';
 import Translator from '../Translator/Translator';
+import NavigationBar from '../NavigationBar/NavigationBar';
+
+import './Landing.css'
 
 function Landing() {
     const navigate = useNavigate()
@@ -29,12 +30,10 @@ function Landing() {
 
     return (
         <div>
-            <nav className='Landing-nav'>
-                <Stack direction={'row'} justifyContent={'flex-end'} spacing={1}>
+            <NavigationBar>
                     <Button onClick={openSignUp} variant='outlined' size='large' color='inherit'><Translator path='landing.sign_up' /></Button>
                     <Button onClick={openSignIn} variant='contained' size='large'><Translator path='landing.sign_in' /></Button>
-                </Stack>
-            </nav>
+            </NavigationBar>
             <div className='Landing-content'>
                 <Typography variant='h1'>Codemaze</Typography>
                 <Typography variant='h4'>[School Name]</Typography>

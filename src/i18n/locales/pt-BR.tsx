@@ -30,5 +30,8 @@ export default {
             inactive: 'Inativo',
             empty: 'Nenhum grupo...',
         },
+        profile: {
+            logOut: 'Sair',
+        },
     }
 }
