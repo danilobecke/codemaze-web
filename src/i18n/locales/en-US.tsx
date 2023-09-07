@@ -23,6 +23,12 @@ export default {
             email: 'Email',
             password: 'Password',
             password_confirmation: 'Confirm Password'
-        }
+        },
+        groups: {
+            title: 'Groups',
+            active: 'Active',
+            inactive: 'Inactive',
+            empty: 'No groups...',
+        },
     }
 }

@@ -4,8 +4,8 @@ import Session from "./Session";
 const base_url = 'http://127.0.0.1:48345'
 
 // get URL
-export function v1Namespace(route: string): string {
-    return base_url + '/api/v1/' + route
+export function v1Namespace(route: string, params: {key: string, value: any}[] | null = null): string {
+    return base_url + '/api/v1/' + route + (params ? '?' + params.map(param => param.key + '=' + param.value).join(',') : '')
 }
 
 // Base Object
@@ -21,7 +21,7 @@ enum Method {
     PATCH = 'PATCH'
 };
 
-function getJSONRequestOptions(method: Method, authenticated: boolean, body?: Object): RequestInit {
+function getJSONRequestOptions(method: Method, authenticated: boolean, body: Object | null): RequestInit {
     const requestOptions: RequestInit = {
         method: method,
         headers: {
@@ -48,7 +48,11 @@ function getJson(response: Response): Promise<any> {
     if (response.ok) {
         return response.json()
     }
-    throw new Error(response.status + ' - ' + response.statusText)
+    const status = response.status
+    if (status == 401) {
+        Session.logOut()
+    }
+    throw new Error(status + ' - ' + response.statusText)
 }
 
 function parse<T extends BaseObject>(data: any, objectType: new () => T): T {
@@ -64,4 +68,16 @@ export async function post<T extends BaseObject>(endpoint: string, body: Object,
     return fetch(endpoint, getJSONRequestOptions(Method.POST, authenticated, body))
         .then(response => getJson(response))
         .then(data => parse(data, objectType))
+}
+
+export async function getArray<T extends BaseObject>(endpoint: string, key: string, objectType: new () => T, authenticated: boolean = true): Promise<T[]> {
+    return fetch(endpoint, getJSONRequestOptions(Method.GET, authenticated, null))
+        .then(response => getJson(response))
+        .then((json) => {
+            let result: T[] = []
+            for(const group of json[key]) {
+                result.push(parse(group, objectType))
+            }
+            return result
+        })
 }
