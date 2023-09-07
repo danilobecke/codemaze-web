@@ -29,9 +29,22 @@ export default {
             active: 'Active',
             inactive: 'Inactive',
             empty: 'No groups...',
+            new: 'New Group',
+            join: 'Join Group',
         },
         profile: {
             logOut: 'Log Out',
+        },
+        new_group: {
+            title: 'New Group',
+            name: 'Name',
+        },
+        join_group: {
+            title: 'Join Group',
+            code: 'Group Code',
+        },
+        snackbar: {
+            success: 'Success',
         },
     }
 }
