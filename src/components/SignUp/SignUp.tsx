@@ -55,10 +55,12 @@ function SingUpInput(props: { role: Role, show: boolean, close: () => void }) {
         if (!name || !email || !password || !passwordValidation) {
             return
         }
+        const hasNameError = name.split(' ').length < 2
+        setNameError(hasNameError)
         const hasPasswordError = password !== passwordValidation
         setPasswordError(hasPasswordError)
         setPasswordValidationError(hasPasswordError)
-        if (hasPasswordError) {
+        if (hasPasswordError || hasNameError) {
             return
         }
         let url = ''

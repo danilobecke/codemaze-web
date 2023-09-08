@@ -19,7 +19,7 @@ export default {
             student: 'I\'m a Student',
             managerTitle: 'Professor Sign Up',
             studentTitle: 'Student Sign Up',
-            name: 'Name',
+            name: 'Full Name',
             email: 'Email',
             password: 'Password',
             password_confirmation: 'Confirm Password'

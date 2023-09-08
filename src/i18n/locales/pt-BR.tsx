@@ -19,7 +19,7 @@ export default {
             student: 'Sou Aluno',
             managerTitle: 'Cadastro de Professor',
             studentTitle: 'Cadastro de Aluno',
-            name: 'Nome',
+            name: 'Nome Completo',
             email: 'Email',
             password: 'Senha',
             password_confirmation: 'Confirmar Senha'
