@@ -11,6 +11,7 @@ import { User } from '../../models/User';
 import ErrorToast from '../ErrorToast/ErrorToast';
 import Session from '../../services/Session';
 import Translator from '../Translator/Translator';
+import Loader from '../Loader/Loader';
 
 function RoleSelector(props: { setRole: (role: Role) => void, show: boolean, close: () => void }) {
     return (
@@ -35,6 +36,7 @@ function SingUpInput(props: { role: Role, show: boolean, close: () => void }) {
     const [passwordError, setPasswordError] = useState(false)
     const [passwordValidationError, setPasswordValidationError] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     const navigate = useNavigate()
 
@@ -78,7 +80,7 @@ function SingUpInput(props: { role: Role, show: boolean, close: () => void }) {
             'password': password,
         }
         try {
-            const user = await post(url, body, User, false)
+            const user = await post(url, body, User, setIsLoading, false)
             Session.logIn(user)
             close()
             navigate('/groups')
@@ -107,6 +109,7 @@ function SingUpInput(props: { role: Role, show: boolean, close: () => void }) {
                 </DialogActions>
             </Dialog>
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <Loader show={isLoading} />
         </div>
     );
 }

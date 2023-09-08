@@ -12,6 +12,7 @@ import Session from "../../services/Session";
 import { Role } from "../../models/Role";
 import NewGroup from "../NewGroup/NewGroup";
 import JoinGroup from "../JoinGroup/JoinGroup";
+import Loader from "../Loader/Loader";
 
 function Groups() {
     const user = Session.getCurrentUser()
@@ -23,9 +24,11 @@ function Groups() {
     const [showNewGroup, setShowNewGroup] = useState(false)
     const [showJoinGroup, setShowJoinGroup] = useState(false)
 
+    const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
         async function fetch() {
-            const groups = await getArray(v1Namespace('groups', [{ key: 'member_of', value: true }]), 'groups', Group)
+            const groups = await getArray(v1Namespace('groups', [{ key: 'member_of', value: true }]), 'groups', Group, setIsLoading)
             const sorted = groups.sort((a, b) => a.name.toUpperCase() < b.name.toUpperCase() ? -1 : 1)
             setActiveGroups(sorted.filter(group => group.active))
             setInactiveGroups(sorted.filter(group => !group.active))
@@ -63,7 +66,7 @@ function Groups() {
         !user ? null :
         <div>
             <NavigationBar>
-                <Button variant="contained" size="large" onClick={() => buttonAction(user.role)}>{user.role == 'manager' ? <Translator path="groups.new"/> : <Translator path="groups.join"/> }</Button>
+                <Button variant="contained" size="large" onClick={() => buttonAction(user.role)}>{user.role === 'manager' ? <Translator path="groups.new"/> : <Translator path="groups.join"/> }</Button>
             </NavigationBar>
             <Container>
                 <Stack direction='column' spacing={4}>
@@ -90,6 +93,7 @@ function Groups() {
             </Container>
             <NewGroup show={showNewGroup} close={() => setShowNewGroup(false)} />
             <JoinGroup show={showJoinGroup} close={() => setShowJoinGroup(false)} />
+            <Loader show={isLoading} />
         </div>
     )
 }

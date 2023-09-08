@@ -49,7 +49,7 @@ function getJson(response: Response): Promise<any> {
         return response.json()
     }
     const status = response.status
-    if (status == 401) {
+    if (status === 401) {
         Session.logOut()
     }
     throw new Error(status + ' - ' + response.statusText)
@@ -64,13 +64,16 @@ function parse<T extends BaseObject>(data: any, objectType: new () => T): T {
 }
 
 // Methods
-export async function post<T extends BaseObject>(endpoint: string, body: Object, objectType: new () => T, authenticated: boolean = true): Promise<T> {
+export async function post<T extends BaseObject>(endpoint: string, body: Object, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+    setIsLoading(true)
     return fetch(endpoint, getJSONRequestOptions(Method.POST, authenticated, body))
         .then(response => getJson(response))
         .then(data => parse(data, objectType))
+        .finally(() => setIsLoading(false))
 }
 
-export async function getArray<T extends BaseObject>(endpoint: string, key: string, objectType: new () => T, authenticated: boolean = true): Promise<T[]> {
+export async function getArray<T extends BaseObject>(endpoint: string, key: string, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T[]> {
+    setIsLoading(true)
     return fetch(endpoint, getJSONRequestOptions(Method.GET, authenticated, null))
         .then(response => getJson(response))
         .then((json) => {
@@ -80,4 +83,5 @@ export async function getArray<T extends BaseObject>(endpoint: string, key: stri
             }
             return result
         })
+        .finally(() => setIsLoading(false))
 }

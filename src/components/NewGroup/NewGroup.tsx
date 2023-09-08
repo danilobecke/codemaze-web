@@ -6,12 +6,14 @@ import { useState } from "react";
 import { post, v1Namespace } from "../../services/ApiService";
 import { Group } from "../../models/Group";
 import ErrorToast from "../ErrorToast/ErrorToast";
+import Loader from "../Loader/Loader";
 
 function NewGroup(props: { show: boolean, close: () => void }) {
     const fieldName = 'newGroup-Name'
 
     const [fieldError, setFieldError] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
 
     function onClose() {
         clearInput(fieldName)
@@ -26,7 +28,7 @@ function NewGroup(props: { show: boolean, close: () => void }) {
             'name': name
         }
         try {
-            await post(v1Namespace('groups'), body, Group)
+            await post(v1Namespace('groups'), body, Group, setIsLoading)
             onClose()
             // TODO: open group page
         } catch (error) {
@@ -50,6 +52,7 @@ function NewGroup(props: { show: boolean, close: () => void }) {
                 </DialogActions>
             </Dialog>
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <Loader show={isLoading} />
         </div>
 
     );

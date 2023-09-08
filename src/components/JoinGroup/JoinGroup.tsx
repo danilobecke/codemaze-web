@@ -7,6 +7,7 @@ import { post, v1Namespace } from "../../services/ApiService";
 import ErrorToast from "../ErrorToast/ErrorToast";
 import Success from "../../models/Success";
 import SuccessToast from "../SuccessToast/SuccessToast";
+import Loader from "../Loader/Loader";
 
 function JoinGroup(props: { show: boolean, close: () => void }) {
     const fieldName = 'joinGroup-Name'
@@ -14,6 +15,7 @@ function JoinGroup(props: { show: boolean, close: () => void }) {
     const [fieldError, setFieldError] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [snackbarOpen, setSnackbarOpen] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     function onClose() {
         clearInput(fieldName)
@@ -28,7 +30,7 @@ function JoinGroup(props: { show: boolean, close: () => void }) {
             'code': code
         }
         try {
-            await post(v1Namespace('groups/join'), body, Success)
+            await post(v1Namespace('groups/join'), body, Success, setIsLoading)
             onClose()
             setSnackbarOpen(true)
         } catch (error) {
@@ -53,6 +55,7 @@ function JoinGroup(props: { show: boolean, close: () => void }) {
             </Dialog>
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
             <SuccessToast show={snackbarOpen} close={() => setSnackbarOpen(false)} />
+            <Loader show={isLoading} />
         </div>
     );
 }
