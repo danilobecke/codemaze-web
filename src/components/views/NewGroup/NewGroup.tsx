@@ -1,12 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 
-import Translator from "../Translator/Translator";
-import { clearInput, getInputValue } from "../../services/Helpers";
+import Translator from "../../elements/Translator/Translator";
+import { clearInput, getInputValue } from "../../../services/Helpers";
 import { useState } from "react";
-import { post, v1Namespace } from "../../services/ApiService";
-import { Group } from "../../models/Group";
-import ErrorToast from "../ErrorToast/ErrorToast";
-import Loader from "../Loader/Loader";
+import { post, v1Namespace } from "../../../services/ApiService";
+import { Group } from "../../../models/Group";
+import ErrorToast from "../../elements/ErrorToast/ErrorToast";
+import Loader from "../../elements/Loader/Loader";
 
 function NewGroup(props: { show: boolean, close: () => void }) {
     const fieldName = 'newGroup-Name'
@@ -14,6 +16,8 @@ function NewGroup(props: { show: boolean, close: () => void }) {
     const [fieldError, setFieldError] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState(false)
+
+    const navigate = useNavigate()
 
     function onClose() {
         clearInput(fieldName)
@@ -28,9 +32,9 @@ function NewGroup(props: { show: boolean, close: () => void }) {
             'name': name
         }
         try {
-            await post(v1Namespace('groups'), body, Group, setIsLoading)
+            const group = await post(v1Namespace('groups'), body, Group, setIsLoading)
             onClose()
-            // TODO: open group page
+            navigate('/groups/' + group.id)
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(error.message)

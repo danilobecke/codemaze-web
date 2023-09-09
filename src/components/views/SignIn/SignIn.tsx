@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 
-import { User } from '../../models/User';
-import { v1Namespace, post } from '../../services/ApiService';
-import PasswordButton from '../PasswordButton/PasswordButton';
-import { getInputValue, clearInput } from '../../services/Helpers';
-import ErrorToast from '../ErrorToast/ErrorToast';
-import Session from '../../services/Session';
-import Translator from '../Translator/Translator';
-import Loader from '../Loader/Loader';
+import { User } from '../../../models/User';
+import { v1Namespace, post } from '../../../services/ApiService';
+import PasswordButton from '../../elements/PasswordButton/PasswordButton';
+import { getInputValue, clearInput } from '../../../services/Helpers';
+import ErrorToast from '../../elements/ErrorToast/ErrorToast';
+import Session from '../../../services/Session';
+import Translator from '../../elements/Translator/Translator';
+import Loader from '../../elements/Loader/Loader';
 
 function SignIn(props: { show: boolean, close: () => void }) {
     const emailName = 'email_signin'

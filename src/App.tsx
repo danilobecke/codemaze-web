@@ -7,9 +7,10 @@ import {
 } from "react-router-dom";
 
 import Session from "./services/Session";
-import Landing from './components/Landing/Landing';
-import Groups from "./components/Groups/Groups";
-import NotFound from "./components/NotFound/NotFound";
+import Landing from './components/views/Landing/Landing';
+import Groups from "./components/views/Groups/Groups";
+import GroupDetails from "./components/views/GroupDetails/GroupDetails";
+import NotFound from "./components/views/NotFound/NotFound";
 
 import './App.css';
 

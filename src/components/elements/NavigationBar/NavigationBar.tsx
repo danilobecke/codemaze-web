@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import { Avatar, IconButton, Stack } from "@mui/material";
 
-import Session from "../../services/Session";
-import Profile from "../Profile/Profile";
+import Session from "../../../services/Session";
+import Profile from "../../views/Profile/Profile";
 
 import './NavigationBar.css';
 

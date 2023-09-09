@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, Typography } from '@mui/material';
 
-import Session from '../../services/Session';
+import Session from '../../../services/Session';
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
-import Translator from '../Translator/Translator';
-import NavigationBar from '../NavigationBar/NavigationBar';
+import Translator from '../../elements/Translator/Translator';
+import NavigationBar from '../../elements/NavigationBar/NavigationBar';
 
 import './Landing.css'
 

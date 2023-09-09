@@ -3,15 +3,15 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 
-import { v1Namespace, post } from '../../services/ApiService';
-import { Role } from '../../models/Role';
-import { clearInput, getInputValue } from '../../services/Helpers';
-import PasswordButton from '../PasswordButton/PasswordButton';
-import { User } from '../../models/User';
-import ErrorToast from '../ErrorToast/ErrorToast';
-import Session from '../../services/Session';
-import Translator from '../Translator/Translator';
-import Loader from '../Loader/Loader';
+import { v1Namespace, post } from '../../../services/ApiService';
+import { Role } from '../../../models/Role';
+import { clearInput, getInputValue } from '../../../services/Helpers';
+import PasswordButton from '../../elements/PasswordButton/PasswordButton';
+import { User } from '../../../models/User';
+import ErrorToast from '../../elements/ErrorToast/ErrorToast';
+import Session from '../../../services/Session';
+import Translator from '../../elements/Translator/Translator';
+import Loader from '../../elements/Loader/Loader';
 
 function RoleSelector(props: { setRole: (role: Role) => void, show: boolean, close: () => void }) {
     return (

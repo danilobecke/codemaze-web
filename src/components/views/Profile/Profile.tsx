@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
-import Session from "../../services/Session";
-import Translator from "../Translator/Translator";
+import Session from "../../../services/Session";
+import Translator from "../../elements/Translator/Translator";
 
 function Profile(props: {show: boolean, close: () => void}) {
     const navigate = useNavigate()

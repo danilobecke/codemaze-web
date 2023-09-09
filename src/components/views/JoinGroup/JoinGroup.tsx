@@ -1,13 +1,13 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 
-import Translator from "../Translator/Translator";
-import { clearInput, getInputValue } from "../../services/Helpers";
+import Translator from "../../elements/Translator/Translator";
+import { clearInput, getInputValue } from "../../../services/Helpers";
 import { useState } from "react";
-import { post, v1Namespace } from "../../services/ApiService";
-import ErrorToast from "../ErrorToast/ErrorToast";
-import Success from "../../models/Success";
-import SuccessToast from "../SuccessToast/SuccessToast";
-import Loader from "../Loader/Loader";
+import { post, v1Namespace } from "../../../services/ApiService";
+import ErrorToast from "../../elements/ErrorToast/ErrorToast";
+import Success from "../../../models/Success";
+import SuccessToast from "../../elements/SuccessToast/SuccessToast";
+import Loader from "../../elements/Loader/Loader";
 
 function JoinGroup(props: { show: boolean, close: () => void }) {
     const fieldName = 'joinGroup-Name'
