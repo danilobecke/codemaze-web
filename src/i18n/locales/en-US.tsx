@@ -46,5 +46,11 @@ export default {
         snackbar: {
             success: 'Success',
         },
+        group: {
+            code: 'Code',
+            manager: 'Professor',
+            students: 'Students',
+            tasks: 'Tasks',
+        },
     }
 }

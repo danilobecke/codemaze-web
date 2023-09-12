@@ -33,6 +33,11 @@ function App() {
                 <Groups />
               </ProtectedRoute>
             } />
+            <Route path="/groups/:groupID" element={
+              <ProtectedRoute>
+                <GroupDetails />
+              </ProtectedRoute>
+            } />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
