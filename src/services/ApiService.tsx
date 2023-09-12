@@ -1,7 +1,7 @@
 import Session from "./Session";
 
 // Base URL
-const base_url = 'http://127.0.0.1:48345'
+const base_url = 'http://127.0.0.1:8080'
 
 // get URL
 export function v1Namespace(route: string, params: {key: string, value: any}[] | null = null): string {
@@ -64,12 +64,16 @@ function parse<T extends BaseObject>(data: any, objectType: new () => T): T {
 }
 
 // Methods
-export async function post<T extends BaseObject>(endpoint: string, body: Object, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+async function _fetch<T extends BaseObject>(endpoint: string, method: Method, body: Object | null, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean): Promise<T> {
     setIsLoading(true)
-    return fetch(endpoint, getJSONRequestOptions(Method.POST, authenticated, body))
+    return fetch(endpoint, getJSONRequestOptions(method, authenticated, body))
         .then(response => getJson(response))
         .then(data => parse(data, objectType))
         .finally(() => setIsLoading(false))
+}
+
+export async function post<T extends BaseObject>(endpoint: string, body: Object, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+    return _fetch(endpoint, Method.POST, body, objectType, setIsLoading, authenticated)
 }
 
 export async function getArray<T extends BaseObject>(endpoint: string, key: string, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T[]> {
@@ -84,4 +88,8 @@ export async function getArray<T extends BaseObject>(endpoint: string, key: stri
             return result
         })
         .finally(() => setIsLoading(false))
+}
+
+export async function get<T extends BaseObject>(endpoint: string, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+    return _fetch(endpoint, Method.GET, null, objectType, setIsLoading, authenticated)
 }
