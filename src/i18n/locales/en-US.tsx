@@ -63,5 +63,10 @@ export default {
             approve: 'Allow {{name}} to join the group.',
             refuse: 'Decline {{name}}\'s join request.',
         },
+        group_settings: {
+            title: 'Settings',
+            active: 'Active',
+            name: 'Name',
+        },
     }
 }

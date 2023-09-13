@@ -63,5 +63,10 @@ export default {
             approve: 'Permitir que {{name}} entre no grupo.',
             refuse: 'Recusar a entrada de {{name}}.',
         },
+        group_settings: {
+            title: 'Configurações',
+            active: 'Ativo',
+            name: 'Nome',
+        },
     }
 }

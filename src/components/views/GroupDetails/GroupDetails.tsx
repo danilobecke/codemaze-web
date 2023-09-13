@@ -13,6 +13,7 @@ import Session from "../../../services/Session";
 import Translator from "../../elements/Translator/Translator";
 import { JoinRequest } from "../../../models/JoinRequest";
 import Row from "../../elements/Row/Row";
+import GroupSettings from "../GroupSettings/GroupSettings";
 
 function GroupDetails() {
     const { groupID } = useParams()
@@ -22,11 +23,13 @@ function GroupDetails() {
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-    const [group, setGroup] = useState<Group | null>(null)
+    const [group, setGroup] = useState<Group>(new Group())
     const [requestsCount, setRequestsCount] = useState(0)
 
     const tasksLabel = Translator({ path: 'group.tasks' })
     const studentsLabel = Translator({ path: 'group.students' })
+
+    const [settingsOpen, setSettingsOpen] = useState(false)
 
     useEffect(() => {
         async function fetch() {
@@ -50,13 +53,13 @@ function GroupDetails() {
                     alert(error) // fallback
                 }
             })
-    }, [groupID])
+    }, [group?.active, group?.name])
 
     function showSettings() {
-        if (!group || !user || user.role === 'student') {
+        if (!user || user.role === 'student') {
             return
         }
-        // TODO
+        setSettingsOpen(true)
     }
 
     function openTasks() {
@@ -65,6 +68,11 @@ function GroupDetails() {
 
     function openStudents() {
         navigate('students') // relative path
+    }
+
+    function closeSettings(didUpdate: boolean) {
+        setSettingsOpen(false)
+        // TODO
     }
 
     return (
@@ -92,6 +100,7 @@ function GroupDetails() {
             </Container>
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
             <Loader show={isLoading} />
+            <GroupSettings show={settingsOpen} onClose={closeSettings} group={group} />
         </div>
     )
 }
