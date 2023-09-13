@@ -58,5 +58,10 @@ export default {
             active: 'Active',
             empty: 'Share the group code with your students.',
         },
+        manage_request: {
+            title: 'Confirm',
+            approve: 'Allow {{name}} to join the group.',
+            refuse: 'Decline {{name}}\'s join request.',
+        },
     }
 }

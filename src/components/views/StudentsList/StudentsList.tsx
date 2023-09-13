@@ -12,6 +12,7 @@ import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import Translator from "../../elements/Translator/Translator";
+import ManageRequest from "../ManageRequest/ManageRequest";
 
 function StudentsList() {
     const { groupID } = useParams()
@@ -22,6 +23,9 @@ function StudentsList() {
 
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+    const [showManageRequest, setShowManageRequest] = useState(false)
+    const [selectedJoinRequest, setSelectedJoinRequest] = useState<JoinRequest>(new JoinRequest())
 
     useEffect(() => {
         async function fetch() {
@@ -65,7 +69,16 @@ function StudentsList() {
     }
 
     function updateResquest(approve: boolean, request: JoinRequest) {
-        // TODO
+        request.approve = approve
+        setSelectedJoinRequest(request)
+        setShowManageRequest(true)
+    }
+
+    function manageRequestOnClose(success: boolean) {
+        setShowManageRequest(false)
+        if (success) {
+            setRequests(requests.filter((request) => request.id !== selectedJoinRequest.id))
+        }
     }
 
     function studentToRow(student: PublicUser) {
@@ -103,6 +116,7 @@ function StudentsList() {
                     }
                 </Stack>
             </Container>
+            <ManageRequest show={showManageRequest} onClose={manageRequestOnClose} request={selectedJoinRequest}/>
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
         </div>

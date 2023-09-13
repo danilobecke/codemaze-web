@@ -58,5 +58,10 @@ export default {
             active: 'Ativos',
             empty: 'Compartilhe o código do grupo com seus alunos.'
         },
+        manage_request: {
+            title: 'Confirmar',
+            approve: 'Permitir que {{name}} entre no grupo.',
+            refuse: 'Recusar a entrada de {{name}}.',
+        },
     }
 }

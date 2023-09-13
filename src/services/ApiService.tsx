@@ -93,3 +93,7 @@ export async function getArray<T extends BaseObject>(endpoint: string, key: stri
 export async function get<T extends BaseObject>(endpoint: string, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
     return _fetch(endpoint, Method.GET, null, objectType, setIsLoading, authenticated)
 }
+
+export async function patch<T extends BaseObject>(endpoint: string, body: Object, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+    return _fetch(endpoint, Method.PATCH, body, objectType, setIsLoading, authenticated)
+}

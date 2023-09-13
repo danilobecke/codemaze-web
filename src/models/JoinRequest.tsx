@@ -4,10 +4,12 @@ import { BaseObject } from "../services/ApiService";
 export class JoinRequest implements BaseObject {
     id: number
     student: string
+    approve: boolean | null
 
     constructor() {
         this.id = -1
         this.student = ''
+        this.approve = null
     }
 
     #isJoinRequest = objectOf({
