@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Container, IconButton, List, Stack, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
@@ -15,8 +15,9 @@ import { JoinRequest } from "../../../models/JoinRequest";
 import Row from "../../elements/Row/Row";
 
 function GroupDetails() {
-    let { groupID } = useParams()
-    let user = Session.getCurrentUser()
+    const { groupID } = useParams()
+    const user = Session.getCurrentUser()
+    const navigate = useNavigate()
 
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -63,7 +64,7 @@ function GroupDetails() {
     }
 
     function openStudents() {
-        // TODO
+        navigate('students') // relative path
     }
 
     return (

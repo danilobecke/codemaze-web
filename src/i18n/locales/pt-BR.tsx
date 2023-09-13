@@ -52,5 +52,11 @@ export default {
             students: 'Alunos',
             tasks: 'Tarefas',
         },
+        students_list: {
+            requests: 'Pedidos para Participar',
+            title: 'Alunos',
+            active: 'Ativos',
+            empty: 'Compartilhe o código do grupo com seus alunos.'
+        },
     }
 }

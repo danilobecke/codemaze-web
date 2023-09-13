@@ -52,5 +52,11 @@ export default {
             students: 'Students',
             tasks: 'Tasks',
         },
+        students_list: {
+            requests: 'Join Requests',
+            title: 'Students',
+            active: 'Active',
+            empty: 'Share the group code with your students.',
+        },
     }
 }
