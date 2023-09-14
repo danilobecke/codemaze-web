@@ -63,7 +63,7 @@ function GroupDetails() {
     }
 
     function openTasks() {
-        // TODO
+        navigate('tasks')
     }
 
     function openStudents() {
@@ -96,7 +96,6 @@ function GroupDetails() {
                                 user.role === 'student' ? null : <Row key='students' onClick={openStudents} text={studentsLabel} badgeCount={requestsCount} />
                             }
                         </List>
-
                     </Stack>
                 }
             </Container>

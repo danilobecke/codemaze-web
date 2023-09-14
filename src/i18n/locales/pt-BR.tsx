@@ -68,5 +68,13 @@ export default {
             active: 'Ativo',
             name: 'Nome',
         },
+        tasks: {
+            newTask: 'Nova Tarefa',
+            title: 'Tarefas',
+            empty: 'Nenhuma tarefa...',
+            open: 'Tarefas iniciadas',
+            closed: 'Tarefas encerradas',
+            upcoming: 'Tarefas não iniciadas',
+        },
     }
 }

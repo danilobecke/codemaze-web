@@ -11,6 +11,7 @@ import Landing from './components/views/Landing/Landing';
 import Groups from "./components/views/Groups/Groups";
 import GroupDetails from "./components/views/GroupDetails/GroupDetails";
 import StudentsList from "./components/views/StudentsList/StudentsList";
+import TasksList from "./components/views/TasksList/TasksList";
 import NotFound from "./components/views/NotFound/NotFound";
 
 import './App.css';
@@ -42,6 +43,11 @@ function App() {
             <Route path="/groups/:groupID/students" element={
               <ProtectedRoute>
                 <StudentsList />
+              </ProtectedRoute>
+            } />
+            <Route path="/groups/:groupID/tasks" element={
+              <ProtectedRoute>
+                <TasksList />
               </ProtectedRoute>
             } />
             <Route path="*" element={<NotFound />} />

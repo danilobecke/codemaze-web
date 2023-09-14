@@ -68,5 +68,13 @@ export default {
             active: 'Active',
             name: 'Name',
         },
+        tasks: {
+            newTask: 'New Task',
+            title: 'Tasks',
+            empty: 'No tasks...',
+            open: 'Started tasks',
+            closed: 'Closed tasks',
+            upcoming: 'Upcoming tasks',
+        },
     }
 }
