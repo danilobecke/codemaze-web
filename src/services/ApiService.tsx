@@ -4,7 +4,7 @@ import Session from "./Session";
 const base_url = 'http://127.0.0.1:8080'
 
 // get URL
-export function v1Namespace(route: string, params: {key: string, value: any}[] | null = null): string {
+export function v1Namespace(route: string, params: { key: string, value: any }[] | null = null): string {
     return base_url + '/api/v1/' + route + (params ? '?' + params.map(param => param.key + '=' + param.value).join(',') : '')
 }
 
@@ -29,7 +29,7 @@ function getJSONRequestOptions(method: Method, authenticated: boolean, body: Obj
         }
     };
     if (body) {
-        requestOptions.body = JSON.stringify(body)
+        requestOptions.body = JSON.stringify(body, jsonReplacer)
     }
     if (authenticated) {
         const user = Session.getCurrentUser()
@@ -42,6 +42,14 @@ function getJSONRequestOptions(method: Method, authenticated: boolean, body: Obj
         };
     }
     return requestOptions
+}
+
+function jsonReplacer(key: string, value: any) {
+    // Filtering null out properties
+    if (value === null) {
+        return undefined;
+    }
+    return value;
 }
 
 function getJson(response: Response): Promise<any> {
@@ -82,7 +90,7 @@ export async function getArray<T extends BaseObject>(endpoint: string, key: stri
         .then(response => getJson(response))
         .then((json) => {
             let result: T[] = []
-            for(const group of json[key]) {
+            for (const group of json[key]) {
                 result.push(parse(group, objectType))
             }
             return result
