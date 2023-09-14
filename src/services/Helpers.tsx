@@ -3,13 +3,11 @@ export function clearInput(name: string) {
     field.value = ''
 }
 
-export function getInputValue(element_name: string, setError: (error: boolean) => void): string | null {
+export function getInputValue(element_name: string, setError: ((error: boolean) => void) | null = null): string | null {
     const field = document.getElementsByName(element_name)[0] as HTMLInputElement
     const value = field.value.trim()
-    if(!value) {
-        setError(true)
-        return null
+    if (setError) {
+        setError(!value)
     }
-    setError(false)
-    return value
+    return !value ? null : value
 }

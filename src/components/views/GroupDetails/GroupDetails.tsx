@@ -70,9 +70,11 @@ function GroupDetails() {
         navigate('students') // relative path
     }
 
-    function closeSettings(didUpdate: boolean) {
+    function closeSettings(updatedGroup: Group | null) {
         setSettingsOpen(false)
-        // TODO
+        if (updatedGroup) {
+            setGroup(updatedGroup)
+        }
     }
 
     return (
