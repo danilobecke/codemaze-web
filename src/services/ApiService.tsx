@@ -5,7 +5,7 @@ const base_url = 'http://127.0.0.1:8080'
 
 // get URL
 export function v1Namespace(route: string, params: { key: string, value: any }[] | null = null): string {
-    return base_url + '/api/v1/' + route + (params ? '?' + params.map(param => param.key + '=' + param.value).join(',') : '')
+    return base_url + '/api/v1/' + route + (params ? '?' + params.map(param => param.key + '=' + param.value).join('&') : '')
 }
 
 // Base Object
@@ -45,7 +45,7 @@ function getJSONRequestOptions(method: Method, authenticated: boolean, body: Obj
 }
 
 function jsonReplacer(key: string, value: any) {
-    // Filtering null out properties
+    // Filtering null properties
     if (value === null) {
         return undefined;
     }
