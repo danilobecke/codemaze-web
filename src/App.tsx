@@ -12,6 +12,7 @@ import Groups from "./components/views/Groups/Groups";
 import GroupDetails from "./components/views/GroupDetails/GroupDetails";
 import StudentsList from "./components/views/StudentsList/StudentsList";
 import TasksList from "./components/views/TasksList/TasksList";
+import TaskDetails from "./components/views/TaskDetails/TaskDetails";
 import NotFound from "./components/views/NotFound/NotFound";
 
 import './App.css';
@@ -48,6 +49,11 @@ function App() {
             <Route path="/groups/:groupID/tasks" element={
               <ProtectedRoute>
                 <TasksList />
+              </ProtectedRoute>
+            } />
+            <Route path="/tasks/:taskID" element={
+              <ProtectedRoute>
+                <TaskDetails />
               </ProtectedRoute>
             } />
             <Route path="*" element={<NotFound />} />

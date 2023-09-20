@@ -76,5 +76,16 @@ export default {
             closed: 'Tarefas encerradas',
             upcoming: 'Tarefas não iniciadas',
         },
+        task: {
+            start: 'Início',
+            end: 'Término',
+            maxAttempts: 'Máximo de tentativas permitidas',
+            languages: 'Linguages permitidas',
+            closed: 'Encerrada',
+            details: 'Detalhes',
+            tests: 'Testes',
+            latestResult: 'Último Resultado',
+            report: 'Relatório',
+        },
     }
 }

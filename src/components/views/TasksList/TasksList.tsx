@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Container, List, Stack, Typography } from "@mui/material";
 
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Session from "../../../services/Session";
 import Translator from "../../elements/Translator/Translator";
-import { Task } from "../../../models/Task";
+import { TaskSummary } from "../../../models/TaskSummary";
 import Row from "../../elements/Row/Row";
 import { getArray, v1Namespace } from "../../../services/ApiService";
 import Loader from "../../elements/Loader/Loader";
@@ -15,17 +15,18 @@ import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 function TasksList() {
     const user = Session.getCurrentUser()
     const { groupID } = useParams()
+    const navigate = useNavigate()
 
-    const [upcomingTasks, setUpcomingTasks] = useState<Task[]>([])
-    const [openTasks, setOpenTasks] = useState<Task[]>([])
-    const [closedTasks, setClosedTasks] = useState<Task[]>([])
+    const [upcomingTasks, setUpcomingTasks] = useState<TaskSummary[]>([])
+    const [openTasks, setOpenTasks] = useState<TaskSummary[]>([])
+    const [closedTasks, setClosedTasks] = useState<TaskSummary[]>([])
 
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     useEffect(() => {
         async function fetch() {
-            return getArray(v1Namespace('groups/' + groupID + '/tasks'), 'tasks', Task, setIsLoading)
+            return getArray(v1Namespace('groups/' + groupID + '/tasks'), 'tasks', TaskSummary, setIsLoading)
                 .then((tasks) => {
                     const sorted = tasks.sort(sort)
                     const now = new Date()
@@ -37,10 +38,7 @@ function TasksList() {
                         }
                         return endsOn > now && started
                     }))
-                    setClosedTasks(sorted.filter((task) => {
-                        const endsOn = task.endsOn()
-                        return endsOn && endsOn <= now
-                    }))
+                    setClosedTasks(sorted.filter((task) => { return task.isClosed(now) }))
                     setUpcomingTasks(sorted.filter((task) => {
                         return task.startsOn() > now
                     }))
@@ -56,7 +54,7 @@ function TasksList() {
             })
     }, [openTasks.length, closedTasks.length, upcomingTasks.length])
 
-    function sort(lhs: Task, rhs: Task) {
+    function sort(lhs: TaskSummary, rhs: TaskSummary) {
         const lhsEndsOn = lhs.endsOn()
         const rhsEndsOn = rhs.endsOn()
         if (lhsEndsOn && rhsEndsOn) {
@@ -72,12 +70,12 @@ function TasksList() {
         // TODO
     }
 
-    function toRow(task: Task) {
+    function toRow(task: TaskSummary) {
         return (<Row key={task.id} text={task.name} onClick={() => open(task)} />)
     }
 
-    function open(task: Task) {
-        // TODO
+    function open(task: TaskSummary) {
+        navigate('/tasks/' + task.id)
     }
 
     return (

@@ -76,5 +76,16 @@ export default {
             closed: 'Closed tasks',
             upcoming: 'Upcoming tasks',
         },
+        task: {
+            start: 'Starts on',
+            end: 'Ends on',
+            maxAttempts: 'Maximum attempts',
+            languages: 'Allowed languages',
+            closed: 'Closed',
+            details: 'Details',
+            tests: 'Tests',
+            latestResult: 'Latest Result',
+            report: 'Report',
+        },
     }
 }
