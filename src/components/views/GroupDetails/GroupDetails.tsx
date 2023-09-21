@@ -87,8 +87,8 @@ function GroupDetails() {
                     <Stack direction='column' spacing={4}>
                         <div>
                             <Typography variant="h1">{group.name}</Typography>
-                            <Typography variant="h5"><Translator path="group.manager" />: {group.manager.name} - {group.manager.email}</Typography>
-                            <Typography variant="h5"><Translator path="group.code" />: {group.code}</Typography>
+                            <Typography variant="h5"><b><Translator path="group.manager" />:</b> {group.manager.name} - {group.manager.email}</Typography>
+                            <Typography variant="h5"><b><Translator path="group.code" />:</b> {group.code}</Typography>
                         </div>
                         <List>
                             <Row key='tasks' onClick={openTasks} text={tasksLabel} />

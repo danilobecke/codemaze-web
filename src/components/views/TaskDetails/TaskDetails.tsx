@@ -70,14 +70,14 @@ function TaskDetails() {
                         <div>
                             <Typography variant="h1">{task.name}</Typography>
                             {
-                                task.isClosed() ? <Typography variant="h5"><Translator path="task.closed" /></Typography> :
+                                task.isClosed() ? <Typography variant="h5"><b><Translator path="task.closed" /></b></Typography> :
                                     <div>
-                                        <Typography variant="h5"><Translator path="task.start" />: {task.startsOn().toLocaleString()}</Typography>
-                                        {task.endsOn() ? <Typography variant="h5"><Translator path="task.end" />: {task.endsOn()!.toLocaleString()}</Typography> : null}
+                                        <Typography variant="h5"><b><Translator path="task.start" />:</b> {task.startsOn().toLocaleString()}</Typography>
+                                        {task.endsOn() ? <Typography variant="h5"><b><Translator path="task.end" />:</b> {task.endsOn()!.toLocaleString()}</Typography> : null}
                                     </div>
                             }
-                            {task.max_attempts ? <Typography variant="h5"><Translator path="task.maxAttempts" />: {'' + task.max_attempts!}</Typography> : null}
-                            <Typography variant="h5"><Translator path="task.languages" />: {task.languages.join(', ')}</Typography>
+                            {task.max_attempts ? <Typography variant="h5"><b><Translator path="task.maxAttempts" />:</b> {'' + task.max_attempts!}</Typography> : null}
+                            <Typography variant="h5"><b><Translator path="task.languages" />:</b> {task.languages.join(', ')}</Typography>
                         </div>
                     }
                     <List>
