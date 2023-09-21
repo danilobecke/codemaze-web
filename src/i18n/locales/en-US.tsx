@@ -82,6 +82,7 @@ export default {
             maxAttempts: 'Maximum attempts',
             languages: 'Allowed languages',
             closed: 'Closed',
+            submit: 'Submit Code',
             details: 'Details',
             tests: 'Tests',
             latestResult: 'Latest Result',

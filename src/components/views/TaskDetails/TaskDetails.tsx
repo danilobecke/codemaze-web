@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Container, IconButton, List, Stack, Typography } from "@mui/material";
+import { Button, Container, IconButton, List, Stack, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
@@ -39,6 +39,10 @@ function TaskDetails() {
             })
     }, [task?.name, task?.startsOn])
 
+    function showSubmit() {
+
+    }
+
     function showSettings() {
 
     }
@@ -66,7 +70,11 @@ function TaskDetails() {
     return (
         <div>
             <NavigationBar>
-                {!user || user.role === 'student' ? <></> : <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>}
+                {!user || user.role === 'student' ?
+                    task?.isClosed() === true ? <></> : <Button variant="contained" onClick={showSubmit}><Translator path="task.submit" /></Button>
+                    :
+                    <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>
+                }
             </NavigationBar>
             <Container>
                 <Stack direction='column' spacing={4}>
