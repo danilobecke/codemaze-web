@@ -22,15 +22,18 @@ enum Method {
 };
 
 function getJSONRequestOptions(method: Method, authenticated: boolean, body: Object | null): RequestInit {
+    const options = getRequestOptions(method, authenticated, body, { 'Content-Type': 'application/json' })
+    if (body) {
+        options.body = JSON.stringify(body, jsonReplacer)
+    }
+    return options
+}
+
+function getRequestOptions(method: Method, authenticated: boolean, body: Object | null, headers?: HeadersInit): RequestInit {
     const requestOptions: RequestInit = {
         method: method,
-        headers: {
-            'Content-Type': 'application/json',
-        }
+        headers: headers
     };
-    if (body) {
-        requestOptions.body = JSON.stringify(body, jsonReplacer)
-    }
     if (authenticated) {
         const user = Session.getCurrentUser()
         if (!user) {
@@ -53,8 +56,12 @@ function jsonReplacer(key: string, value: any) {
 }
 
 function getJson(response: Response): Promise<any> {
+    return assertResponse(response).json()
+}
+
+function assertResponse(response: Response): Response {
     if (response.ok) {
-        return response.json()
+        return response
     }
     const status = response.status
     if (status === 401) {
