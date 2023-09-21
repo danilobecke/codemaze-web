@@ -70,6 +70,10 @@ function assertResponse(response: Response): Response {
     throw new Error(status + ' - ' + response.statusText)
 }
 
+function getBlob(response: Response): Promise<Blob> {
+    return assertResponse(response).blob()
+}
+
 function parse<T extends BaseObject>(data: any, objectType: new () => T): T {
     const newObject = new objectType()
     if (!newObject.isValid(data)) {
@@ -111,4 +115,13 @@ export async function get<T extends BaseObject>(endpoint: string, objectType: ne
 
 export async function patch<T extends BaseObject>(endpoint: string, body: Object, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
     return _fetch(endpoint, Method.PATCH, body, objectType, setIsLoading, authenticated)
+}
+
+export async function downloadFile(path: string, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<string> {
+    const url = base_url + path
+    setIsLoading(true)
+    return fetch(url, getRequestOptions(Method.GET, authenticated, null))
+        .then(response => getBlob(response))
+        .then(blob => window.URL.createObjectURL(blob))
+        .finally(() => setIsLoading(false))
 }
