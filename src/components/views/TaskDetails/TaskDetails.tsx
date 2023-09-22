@@ -8,10 +8,11 @@ import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Session from "../../../services/Session";
 import Translator from "../../elements/Translator/Translator";
 import Task from "../../../models/Task";
-import { downloadFile, get, v1Namespace } from "../../../services/ApiService";
+import { get, v1Namespace } from "../../../services/ApiService";
 import Row from "../../elements/Row/Row";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
+import { downloadFile } from "../../../services/Helpers";
 
 function TaskDetails() {
     const user = Session.getCurrentUser()
@@ -52,8 +53,7 @@ function TaskDetails() {
         if (!task) {
             return
         }
-        const url = await downloadFile(task.file_url, setIsLoading)
-        window.open(url, '_blank')
+        downloadFile(task.file_url, 'details', setIsLoading)
     }
 
     function showTests() {

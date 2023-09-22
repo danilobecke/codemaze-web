@@ -8,9 +8,20 @@ export function v1Namespace(route: string, params: { key: string, value: any }[]
     return base_url + '/api/v1/' + route + (params ? '?' + params.map(param => param.key + '=' + param.value).join('&') : '')
 }
 
-// Base Object
+// BaseObject
 export interface BaseObject extends Object {
     isValid(json: any): boolean
+}
+
+// File
+export class File {
+    filename?: string
+    url: string
+
+    constructor(url: string, filename?: string) {
+        this.filename = filename
+        this.url = url
+    }
 }
 
 // Helpers
@@ -70,8 +81,11 @@ function assertResponse(response: Response): Response {
     throw new Error(status + ' - ' + response.statusText)
 }
 
-function getBlob(response: Response): Promise<Blob> {
-    return assertResponse(response).blob()
+function getFile(response: Response): Promise<File> {
+    const validResponse = assertResponse(response)
+    const filename = response.headers.get('Content-Disposition')?.match(/filename=(.*)/)?.at(1)
+    return validResponse.blob()
+        .then(blob => new File(window.URL.createObjectURL(blob), filename))
 }
 
 function parse<T extends BaseObject>(data: any, objectType: new () => T): T {
@@ -117,11 +131,10 @@ export async function patch<T extends BaseObject>(endpoint: string, body: Object
     return _fetch(endpoint, Method.PATCH, body, objectType, setIsLoading, authenticated)
 }
 
-export async function downloadFile(path: string, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<string> {
+export async function getFileURL(path: string, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<File> {
     const url = base_url + path
     setIsLoading(true)
     return fetch(url, getRequestOptions(Method.GET, authenticated, null))
-        .then(response => getBlob(response))
-        .then(blob => window.URL.createObjectURL(blob))
+        .then(response => getFile(response))
         .finally(() => setIsLoading(false))
 }

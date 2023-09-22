@@ -7,10 +7,11 @@ import Session from "../../../services/Session";
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Translator from "../../elements/Translator/Translator";
 import TestCase from "../../../models/TestCase";
-import { downloadFile, get, v1Namespace } from "../../../services/ApiService";
+import { get, v1Namespace } from "../../../services/ApiService";
 import { AllTests } from "../../../models/AllTests";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
+import { downloadFile } from "../../../services/Helpers";
 
 function TestsList() {
     const { taskID } = useParams()
@@ -58,15 +59,10 @@ function TestsList() {
         return <ListItem>
             <ListItemText primary={testStr + ' ' + position} primaryTypographyProps={{ variant: 'h5' }} />
             <Stack direction='row' spacing={4}>
-                {test.input_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => openURL(test.input_url!)}>{inputStr}</Link></Typography> : null}
-                {test.output_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => openURL(test.output_url!)}>{outputStr}</Link></Typography> : null}
+                {test.input_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => downloadFile(test.input_url!, 'test.in', setIsLoading)}>{inputStr}</Link></Typography> : null}
+                {test.output_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => downloadFile(test.output_url!, 'test.out', setIsLoading)}>{outputStr}</Link></Typography> : null}
             </Stack>
         </ListItem>
-    }
-
-    async function openURL(url: string) {
-        const resourceURL = await downloadFile(url, setIsLoading)
-        window.open(resourceURL, '_blank')
     }
 
     function singleRow(tests: TestCase[]) {
