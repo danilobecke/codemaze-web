@@ -56,7 +56,7 @@ function TestsList() {
     }
 
     function toRow(position: number, test: TestCase) {
-        return <ListItem>
+        return <ListItem key={test.id}>
             <ListItemText primary={testStr + ' ' + position} primaryTypographyProps={{ variant: 'h5' }} />
             <Stack direction='row' spacing={4}>
                 {test.input_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => downloadFile(test.input_url!, 'test.in', setIsLoading)}>{inputStr}</Link></Typography> : null}
@@ -67,7 +67,7 @@ function TestsList() {
 
     function singleRow(tests: TestCase[]) {
         const numberOfTests = tests.length
-        return <ListItem>
+        return <ListItem key='single-row'>
             <ListItemText primary={numberOfTests + ' ' + (numberOfTests > 1 ? testsStr : testStr)} primaryTypographyProps={{ variant: 'h5' }} />
         </ListItem>
     }
