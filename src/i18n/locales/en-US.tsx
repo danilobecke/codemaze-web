@@ -88,5 +88,15 @@ export default {
             latestResult: 'Latest Result',
             report: 'Report',
         },
+        tests: {
+            newTest: 'New Test',
+            title: 'Tests',
+            open: 'Open Tests',
+            test: 'Test',
+            tests: 'Tests',
+            input: 'Input',
+            output: 'Output',
+            closed: 'Closed Tests',
+        },
     }
 }

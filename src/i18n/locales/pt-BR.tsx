@@ -88,5 +88,15 @@ export default {
             latestResult: 'Último Resultado',
             report: 'Relatório',
         },
+        tests: {
+            newTest: 'Novo Teste',
+            title: 'Testes',
+            open: 'Testes Abertos',
+            test: 'Teste',
+            tests: 'Testes',
+            input: 'Entrada',
+            output: 'Saída',
+            closed: 'Testes Fechados',
+        },
     }
 }

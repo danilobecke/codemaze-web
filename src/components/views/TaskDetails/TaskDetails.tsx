@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Container, IconButton, List, Stack, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
@@ -16,6 +16,7 @@ import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 function TaskDetails() {
     const user = Session.getCurrentUser()
     const { taskID } = useParams()
+    const navigate = useNavigate()
 
     const [task, setTask] = useState<Task | null>(null)
 
@@ -56,7 +57,7 @@ function TaskDetails() {
     }
 
     function showTests() {
-
+        navigate('tests')
     }
 
     function showLatestResult() {
