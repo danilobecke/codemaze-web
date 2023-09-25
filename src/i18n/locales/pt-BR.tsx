@@ -97,6 +97,11 @@ export default {
             input: 'Entrada',
             output: 'Saída',
             closed: 'Testes Fechados',
+            delete: 'Deletar',
+        },
+        test_deletion: {
+            titleOpen: 'Confirmar exclusão do teste aberto {{position}}',
+            titleClosed: 'Confirmar exclusão do teste fechado {{position}}',
         },
     }
 }

@@ -12,6 +12,7 @@ import { AllTests } from "../../../models/AllTests";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import { downloadFile } from "../../../services/Helpers";
+import TestDeletionConfirmation, { TestDeletionConfirmationProps } from "../TestDeletionConfirmation/TestDeletionConfirmation";
 
 function TestsList() {
     const { taskID } = useParams()
@@ -27,6 +28,8 @@ function TestsList() {
     const testsStr = Translator({ path: 'tests.tests' })
     const inputStr = Translator({ path: 'tests.input' })
     const outputStr = Translator({ path: 'tests.output' })
+
+    const [deletionProps, setDeletionProps] = useState<TestDeletionConfirmationProps | null>(null)
 
     useEffect(() => {
         async function fetch() {
@@ -61,8 +64,27 @@ function TestsList() {
             <Stack direction='row' spacing={4}>
                 {test.input_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => downloadFile(test.input_url!, 'test.in', setIsLoading)}>{inputStr}</Link></Typography> : null}
                 {test.output_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => downloadFile(test.output_url!, 'test.out', setIsLoading)}>{outputStr}</Link></Typography> : null}
+                {!user || user.role === 'student' ? null : <Button variant="outlined" color="error" onClick={() => showDelete(test, position)}><Translator path='tests.delete' /></Button>}
             </Stack>
         </ListItem>
+    }
+
+    function showDelete(test: TestCase, position: number) {
+        setDeletionProps({
+            test: test,
+            position: position,
+            onClose: onDeletionClose
+        })
+    }
+
+    function onDeletionClose(removed?: TestCase) {
+        if (removed) {
+            const newValue = new AllTests()
+            newValue.open_tests = allTests!.open_tests.filter(test => test.id !== removed.id)
+            newValue.closed_tests = allTests!.closed_tests.filter(test => test.id !== removed.id)
+            setAllTests(newValue)
+        }
+        setDeletionProps(null)
     }
 
     function singleRow(tests: TestCase[]) {
@@ -98,6 +120,7 @@ function TestsList() {
                     </Stack>
                 </Stack>
             </Container>
+            <TestDeletionConfirmation data={deletionProps} />
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
         </div>
