@@ -131,6 +131,10 @@ export async function patch<T extends BaseObject>(endpoint: string, body: Object
     return _fetch(endpoint, Method.PATCH, body, objectType, setIsLoading, authenticated)
 }
 
+export async function remove<T extends BaseObject>(endpoint: string, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+    return _fetch(endpoint, Method.DELETE, null, objectType, setIsLoading, authenticated)
+}
+
 export async function getFileURL(path: string, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<File> {
     const url = base_url + path
     setIsLoading(true)
