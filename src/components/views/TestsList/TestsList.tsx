@@ -13,6 +13,7 @@ import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import { downloadFile } from "../../../services/Helpers";
 import TestDeletionConfirmation, { TestDeletionConfirmationProps } from "../TestDeletionConfirmation/TestDeletionConfirmation";
+import NewTestCase from "../NewTestCase/NewTestCase";
 
 function TestsList() {
     const { taskID } = useParams()
@@ -30,6 +31,7 @@ function TestsList() {
     const outputStr = Translator({ path: 'tests.output' })
 
     const [deletionProps, setDeletionProps] = useState<TestDeletionConfirmationProps | null>(null)
+    const [showNewTest, setShowNewTest] = useState(false)
 
     useEffect(() => {
         async function fetch() {
@@ -47,7 +49,22 @@ function TestsList() {
     }, [allTests?.open_tests.length, allTests?.closed_tests.length])
 
     function newTest() {
-        // TODO
+        setShowNewTest(true)
+    }
+
+    function closeNewTest(addedTestCase?: TestCase) {
+        if (addedTestCase) {
+            const newValue = new AllTests()
+            newValue.open_tests = allTests!.open_tests
+            newValue.closed_tests = allTests!.closed_tests
+            if (addedTestCase.closed) {
+                newValue.closed_tests.push(addedTestCase)
+            } else {
+                newValue.open_tests.push(addedTestCase)
+            }
+            setAllTests(newValue)
+        }
+        setShowNewTest(false)
     }
 
     function rows(tests: TestCase[]) {
@@ -130,6 +147,7 @@ function TestsList() {
                 </Stack>
             </Container>
             <TestDeletionConfirmation data={deletionProps} />
+            <NewTestCase show={showNewTest} onClose={closeNewTest} />
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
         </div>

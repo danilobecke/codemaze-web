@@ -105,6 +105,12 @@ export default {
             titleOpen: 'Confirmar exclusão do teste aberto {{position}}',
             titleClosed: 'Confirmar exclusão do teste fechado {{position}}',
         },
+        new_test: {
+            title: 'Novo Teste',
+            input: 'Entrada',
+            output: 'Saída',
+            error: 'Todos os campos são obrigatórios.',
+        },
         visibility_selector: {
             title: 'Tipo',
             open: 'Aberto',

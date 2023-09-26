@@ -105,6 +105,12 @@ export default {
             titleOpen: 'Confirm deletion of open test {{position}}',
             titleClosed: 'Confirm deletion of closed test {{position}}',
         },
+        new_test: {
+            title: 'New Test',
+            input: 'Input',
+            output: 'Output',
+            error: 'All fields are required.',
+        },
         visibility_selector: {
             title: 'Kind',
             open: 'Open',
