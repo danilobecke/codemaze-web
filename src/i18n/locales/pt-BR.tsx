@@ -104,5 +104,10 @@ export default {
             titleOpen: 'Confirmar exclusão do teste aberto {{position}}',
             titleClosed: 'Confirmar exclusão do teste fechado {{position}}',
         },
+        visibility_selector: {
+            title: 'Tipo',
+            open: 'Aberto',
+            closed: 'Fechado',
+        },
     }
 }

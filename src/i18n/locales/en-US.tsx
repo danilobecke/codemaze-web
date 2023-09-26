@@ -104,5 +104,10 @@ export default {
             titleOpen: 'Confirm deletion of open test {{position}}',
             titleClosed: 'Confirm deletion of closed test {{position}}',
         },
+        visibility_selector: {
+            title: 'Kind',
+            open: 'Open',
+            closed: 'Closed',
+        },
     }
 }
