@@ -102,22 +102,31 @@ function TestsList() {
             <Container>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path="tests.title" /></Typography>
-                    <Stack>
-                        <Typography variant="h4"><Translator path="tests.open" /></Typography>
-                        <List>
-                            {!allTests ? null : rows(allTests.open_tests)}
-                        </List>
-                    </Stack>
-                    <Stack>
-                        <Typography variant="h4"><Translator path="tests.closed" /></Typography>
-                        {user?.role === 'student' ?
-                            (!allTests ? null : singleRow(allTests?.closed_tests))
-                            :
-                            <List>
-                                {!allTests ? null : rows(allTests.closed_tests)}
-                            </List>
-                        }
-                    </Stack>
+                    {
+                        !allTests || allTests.open_tests.length === 0 ? null :
+                            <Stack>
+                                <Typography variant="h4"><Translator path="tests.open" /></Typography>
+                                <List>
+                                    {rows(allTests.open_tests)}
+                                </List>
+                            </Stack>
+                    }
+                    {
+                        !allTests || allTests.closed_tests.length === 0 ? null :
+                            <Stack>
+                                <Typography variant="h4"><Translator path="tests.closed" /></Typography>
+                                {user?.role === 'student' ?
+                                    (singleRow(allTests.closed_tests))
+                                    :
+                                    <List>
+                                        {rows(allTests.closed_tests)}
+                                    </List>
+                                }
+                            </Stack>
+                    }
+                    {
+                        !allTests || (allTests.open_tests.length === 0 && allTests.closed_tests.length === 0) ? <Typography variant="h5"><Translator path="tests.empty" /></Typography> : null
+                    }
                 </Stack>
             </Container>
             <TestDeletionConfirmation data={deletionProps} />

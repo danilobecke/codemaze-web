@@ -99,6 +99,7 @@ export default {
             output: 'Saída',
             closed: 'Testes Fechados',
             delete: 'Deletar',
+            empty: 'Nenhum teste...',
         },
         test_deletion: {
             titleOpen: 'Confirmar exclusão do teste aberto {{position}}',
