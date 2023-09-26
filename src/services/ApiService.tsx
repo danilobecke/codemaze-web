@@ -33,14 +33,14 @@ enum Method {
 };
 
 function getJSONRequestOptions(method: Method, authenticated: boolean, body: Object | null): RequestInit {
-    const options = getRequestOptions(method, authenticated, body, { 'Content-Type': 'application/json' })
+    const options = getRequestOptions(method, authenticated, { 'Content-Type': 'application/json' })
     if (body) {
         options.body = JSON.stringify(body, jsonReplacer)
     }
     return options
 }
 
-function getRequestOptions(method: Method, authenticated: boolean, body: Object | null, headers?: HeadersInit): RequestInit {
+function getRequestOptions(method: Method, authenticated: boolean, headers?: HeadersInit): RequestInit {
     const requestOptions: RequestInit = {
         method: method,
         headers: headers
@@ -56,6 +56,12 @@ function getRequestOptions(method: Method, authenticated: boolean, body: Object 
         };
     }
     return requestOptions
+}
+
+function getFormDataRequestOptions(authenticated: boolean, body: FormData): RequestInit {
+    const options = getRequestOptions(Method.POST, authenticated, { 'Content-Type': 'multipart/form-data' })
+    options.body = body
+    return options
 }
 
 function jsonReplacer(key: string, value: any) {
@@ -138,7 +144,15 @@ export async function remove<T extends BaseObject>(endpoint: string, objectType:
 export async function getFileURL(path: string, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<File> {
     const url = base_url + path
     setIsLoading(true)
-    return fetch(url, getRequestOptions(Method.GET, authenticated, null))
+    return fetch(url, getRequestOptions(Method.GET, authenticated))
         .then(response => getFile(response))
+        .finally(() => setIsLoading(false))
+}
+
+export async function sendFormData<T extends BaseObject>(endpoint: string, data: FormData, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+    setIsLoading(true)
+    return fetch(endpoint, getFormDataRequestOptions(authenticated, data))
+        .then(response => getJson(response))
+        .then(data => parse(data, objectType))
         .finally(() => setIsLoading(false))
 }
