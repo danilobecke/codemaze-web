@@ -11,7 +11,8 @@ export default {
         },
         buttons: {
             cancel: 'Cancelar',
-            send: 'Enviar'
+            send: 'Enviar',
+            uploadFile: 'Selecionar Arquivo',
         },
         sign_up: {
             roleSelectionTitle: 'Selecione uma Função',

@@ -11,7 +11,8 @@ export default {
         },
         buttons: {
             cancel: 'Cancel',
-            send: 'Send'
+            send: 'Send',
+            uploadFile: 'Upload File',
         },
         sign_up: {
             roleSelectionTitle: 'Select a Role',
