@@ -109,7 +109,6 @@ export default {
             title: 'New Test',
             input: 'Input',
             output: 'Output',
-            error: 'All fields are required.',
         },
         visibility_selector: {
             title: 'Kind',

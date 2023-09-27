@@ -109,7 +109,6 @@ export default {
             title: 'Novo Teste',
             input: 'Entrada',
             output: 'Saída',
-            error: 'Todos os campos são obrigatórios.',
         },
         visibility_selector: {
             title: 'Tipo',

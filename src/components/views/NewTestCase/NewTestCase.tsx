@@ -19,9 +19,12 @@ function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) =
     const [outputFile, setOutputFile] = useState<File | null>(null)
     const [closed, setClosed] = useState<boolean | null>(null)
 
+    const [inputError, setInputError] = useState(false)
+    const [outputError, setOutputError] = useState(false)
+    const [kindError, setKindError] = useState(false)
+
     const inputStr = Translator({ path: 'new_test.input' })
     const outputStr = Translator({ path: 'new_test.output' })
-    const errorStr = Translator({ path: 'new_test.error' })
 
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState(false)
@@ -29,21 +32,29 @@ function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) =
 
     function close(newTest?: TestCase) {
         setInputFile(null)
+        setInputError(false)
         setOutputFile(null)
+        setOutputError(false)
         setClosed(null)
+        setKindError(false)
         props.onClose(newTest)
     }
 
     async function submit() {
-        if (!inputFile || !outputFile || closed === null) {
-            setErrorMessage(errorStr)
+        const _inputError = !inputFile
+        setInputError(_inputError)
+        const _outputError = !outputFile
+        setOutputError(_outputError)
+        const _kindError = closed === null
+        setKindError(_kindError)
+        if (_inputError || _outputError || _kindError) {
             return
         }
         try {
             const data = new FormData()
-            data.append('closed', closed.toString())
-            data.append('input', inputFile)
-            data.append('output', outputFile)
+            data.append('closed', closed!.toString())
+            data.append('input', inputFile!)
+            data.append('output', outputFile!)
             const test = await sendFormData(v1Namespace('tasks/' + taskID + '/tests'), data, TestCase, setIsLoading)
             close(test)
         } catch (error) {
@@ -63,9 +74,9 @@ function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) =
                 </DialogTitle>
                 <DialogContent>
                     <List>
-                        <FileUploadRow title={inputStr} setFile={setInputFile} />
-                        <FileUploadRow title={outputStr} setFile={setOutputFile} />
-                        <TestVisibilitySelectRow setClosed={setClosed} />
+                        <FileUploadRow title={inputStr} hasError={inputError} setFile={setInputFile} />
+                        <FileUploadRow title={outputStr} hasError={outputError} setFile={setOutputFile} />
+                        <TestVisibilitySelectRow hasError={kindError} setClosed={setClosed} />
                     </List>
                 </DialogContent>
                 <DialogActions>

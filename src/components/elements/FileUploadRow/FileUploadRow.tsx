@@ -1,11 +1,11 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, Fragment, useState } from 'react';
 
-import { Button, ListItem, ListItemText, Stack, styled } from '@mui/material';
+import { Button, ListItem, ListItemText, Stack, Typography, styled } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import Translator from '../Translator/Translator';
 
-export default function FileUploadRow(props: { title: string, setFile: (file: File) => void }) {
+export default function FileUploadRow(props: { title: string, hasError: boolean, setFile: (file: File) => void }) {
     const [filename, setFilename] = useState<string | null>(null)
 
     function setFile(file: File) {
@@ -15,7 +15,13 @@ export default function FileUploadRow(props: { title: string, setFile: (file: Fi
 
     return (
         <ListItem key={props.title.replace(' ', '_') + '-upload_file'}>
-            <ListItemText primary={props.title} primaryTypographyProps={{ variant: 'h5' }} secondary={filename} />
+            <ListItemText primary={
+                <Fragment>
+                    <Typography variant="h5" display='inline' component='span' color={props.hasError ? 'error' : 'CaptionText'}>{props.title}</Typography>
+                    <Typography variant="h5" display='inline' color='error'> *</Typography>
+                </Fragment>
+            }
+                secondary={filename} />
             <Stack direction='row' spacing={4}>
                 <span />
                 <FileUploadButton setFile={setFile} />

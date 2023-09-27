@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
-import { FormControl, ListItem, ListItemText, MenuItem, Select, SelectChangeEvent, Stack } from "@mui/material";
+import { FormControl, ListItem, ListItemText, MenuItem, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
 
 import Translator from "../Translator/Translator";
 
-export default function TestVisibilitySelectRow(props: { setClosed: (closed: boolean) => void }) {
+export default function TestVisibilitySelectRow(props: { hasError: boolean, setClosed: (closed: boolean) => void }) {
     return (
         <ListItem key={'visibility_selection'}>
-            <ListItemText primary={Translator({ path: 'visibility_selector.title' })} primaryTypographyProps={{ variant: 'h5' }} />
+            <ListItemText primary={
+                <Fragment>
+                    <Typography variant="h5" display='inline' component='span' color={props.hasError ? 'error' : 'CaptionText'}><Translator path='visibility_selector.title' /></Typography>
+                    <Typography variant="h5" display='inline' color='error'> *</Typography>
+                </Fragment>
+            }
+            />
             <Stack direction='row' spacing={4}>
                 <span />
                 <TestVisibilitySelect setClosed={props.setClosed} />
