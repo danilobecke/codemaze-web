@@ -1,5 +1,6 @@
 import { objectOf, primitives } from "@altostra/type-validations";
 import { BaseObject } from "../services/ApiService";
+import { maybeOrNull } from "../services/Helpers";
 
 export default class TestCase implements BaseObject {
     id: number
@@ -15,8 +16,8 @@ export default class TestCase implements BaseObject {
     static isTestCase = objectOf({
         id: primitives.number,
         closed: primitives.boolean,
-        input_url: primitives.maybeString,
-        output_url: primitives.maybeString
+        input_url: maybeOrNull(primitives.string),
+        output_url: maybeOrNull(primitives.string)
     })
 
     isValid(json: any): boolean {

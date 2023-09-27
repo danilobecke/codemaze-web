@@ -1,3 +1,5 @@
+import { AnyTypeValidation, maybe } from "@altostra/type-validations"
+
 import { getFileURL } from "./ApiService"
 
 export function clearInput(name: string) {
@@ -22,4 +24,8 @@ export async function downloadFile(url: string, filenameFallback: string, setIsL
     document.body.appendChild(link)
     link.click()
     link.parentNode?.removeChild(link)
+}
+
+export function maybeOrNull<T>(validator: AnyTypeValidation<T>) {
+    return maybe(validator, true)
 }

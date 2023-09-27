@@ -1,5 +1,6 @@
 import { arrayOf, objectOf, primitives } from "@altostra/type-validations";
 import { BaseObject } from "../services/ApiService";
+import { maybeOrNull } from "../services/Helpers";
 
 export class TaskSummary implements BaseObject {
     id: number
@@ -34,10 +35,10 @@ export class TaskSummary implements BaseObject {
     #isTask = objectOf({
         id: primitives.number,
         name: primitives.string,
-        max_attempts: primitives.maybeNumber,
+        max_attempts: maybeOrNull(primitives.number),
         languages: arrayOf(primitives.string),
         starts_on: primitives.string,
-        ends_on: primitives.maybeString,
+        ends_on: maybeOrNull(primitives.string),
         file_url: primitives.string,
     })
 
