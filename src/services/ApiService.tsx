@@ -59,7 +59,7 @@ function getRequestOptions(method: Method, authenticated: boolean, headers?: Hea
 }
 
 function getFormDataRequestOptions(authenticated: boolean, body: FormData): RequestInit {
-    const options = getRequestOptions(Method.POST, authenticated, { 'Content-Type': 'multipart/form-data' })
+    const options = getRequestOptions(Method.POST, authenticated)
     options.body = body
     return options
 }
