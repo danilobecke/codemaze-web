@@ -57,6 +57,7 @@ function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) =
             data.append('output', outputFile!)
             const test = await sendFormData(v1Namespace('tasks/' + taskID + '/tests'), data, TestCase, setIsLoading)
             close(test)
+            setShowSuccess(true)
         } catch (error) {
             if (error instanceof Error) {
                 setErrorMessage(error.message)
