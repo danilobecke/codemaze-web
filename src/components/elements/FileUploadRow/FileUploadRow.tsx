@@ -5,7 +5,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import Translator from '../Translator/Translator';
 
-export default function FileUploadRow(props: { title: string, hasError: boolean, setFile: (file: File) => void }) {
+export default function FileUploadRow(props: { title: string, hasError: boolean, setFile: (file: File) => void, themeColor?: string }) {
     const [filename, setFilename] = useState<string | null>(null)
 
     function setFile(file: File) {
@@ -15,13 +15,16 @@ export default function FileUploadRow(props: { title: string, hasError: boolean,
 
     return (
         <ListItem key={props.title.replace(' ', '_') + '-upload_file'}>
-            <ListItemText primary={
-                <Fragment>
-                    <Typography variant="h5" display='inline' component='span' color={props.hasError ? 'error' : 'CaptionText'}>{props.title}</Typography>
-                    <Typography variant="h5" display='inline' color='error'> *</Typography>
-                </Fragment>
-            }
-                secondary={filename} />
+            <ListItemText
+                primary={
+                    <Fragment>
+                        <Typography variant="h5" display='inline' component='span' color={props.hasError ? 'error' : props.themeColor ?? 'CaptionText'}>{props.title}</Typography>
+                        <Typography variant="h5" display='inline' color='error'> *</Typography>
+                    </Fragment>
+                }
+                secondary={filename}
+                secondaryTypographyProps={props.themeColor ? {color: props.themeColor} : undefined}
+            />
             <Stack direction='row' spacing={4}>
                 <span />
                 <FileUploadButton setFile={setFile} />
