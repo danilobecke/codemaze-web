@@ -15,7 +15,7 @@ function DateTimePickerRow(props: { title: string, date: Dayjs | null, setDate: 
                 slotProps={{
                     textField: {
                         InputProps: {
-                            sx: { color: "white" }
+                            sx: { color: "white", minWidth: '266px' }
                         },
                         sx: { "fieldset.MuiOutlinedInput-notchedOutline": { borderColor: 'white' }, "&:hover fieldset.MuiOutlinedInput-notchedOutline": { borderColor: 'ActiveBorder' } },
                     },
