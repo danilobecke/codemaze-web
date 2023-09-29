@@ -115,5 +115,8 @@ export default {
             open: 'Aberto',
             closed: 'Fechado',
         },
+        language_selector: {
+            title: 'Linguagem permitida',
+        },
     }
 }

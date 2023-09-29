@@ -115,5 +115,8 @@ export default {
             open: 'Open',
             closed: 'Closed',
         },
+        language_selector: {
+            title: 'Allowed language',
+        },
     }
 }
