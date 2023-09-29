@@ -67,7 +67,7 @@ function TasksList() {
     }
 
     function newTask() {
-        // TODO
+        navigate('new', {replace: true})
     }
 
     function toRow(task: TaskSummary) {

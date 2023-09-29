@@ -17,6 +17,7 @@ import StudentsList from "./components/views/StudentsList/StudentsList";
 import TasksList from "./components/views/TasksList/TasksList";
 import TaskDetails from "./components/views/TaskDetails/TaskDetails";
 import TestsList from "./components/views/TestsList/TestsList";
+import NewTask from "./components/views/NewTask/NewTask";
 import NotFound from "./components/views/NotFound/NotFound";
 
 import './App.css';
@@ -54,6 +55,11 @@ function App() {
               <Route path="/groups/:groupID/tasks" element={
                 <ProtectedRoute>
                   <TasksList />
+                </ProtectedRoute>
+              } />
+              <Route path="/groups/:groupID/tasks/new" element={
+                <ProtectedRoute>
+                  <NewTask />
                 </ProtectedRoute>
               } />
               <Route path="/tasks/:taskID" element={

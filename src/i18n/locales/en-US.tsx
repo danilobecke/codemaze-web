@@ -115,6 +115,15 @@ export default {
             open: 'Open',
             closed: 'Closed',
         },
+        new_task: {
+            title: 'New Task',
+            name: 'Title',
+            details: 'Details',
+            startsOn: 'Starts on',
+            endsOn: 'Ends on',
+            maxAttempts: 'Maximum attempts',
+            addLanguage: '+ add allowed language',
+        },
         language_selector: {
             title: 'Allowed language',
         },

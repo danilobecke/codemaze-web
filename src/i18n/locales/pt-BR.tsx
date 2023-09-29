@@ -115,6 +115,15 @@ export default {
             open: 'Aberto',
             closed: 'Fechado',
         },
+        new_task: {
+            title: 'Nova Tarefa',
+            name: 'Título',
+            details: 'Enunciado',
+            startsOn: 'Início',
+            endsOn: 'Término',
+            maxAttempts: 'Máximo de tentativas permitidas',
+            addLanguage: '+ adicionar linguagem permitida',
+        },
         language_selector: {
             title: 'Linguagem permitida',
         },
