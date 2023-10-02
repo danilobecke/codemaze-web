@@ -4,7 +4,7 @@ import { FormControl, ListItem, ListItemText, MenuItem, Select, SelectChangeEven
 
 import Translator from "../Translator/Translator";
 
-export default function TestVisibilitySelectRow(props: { hasError: boolean, setClosed: (closed: boolean) => void }) {
+export default function TestVisibilitySelectRow(props: { hasError: boolean, closed: boolean | null, setClosed: (closed: boolean) => void }) {
     return (
         <ListItem key={'visibility_selection'}>
             <ListItemText primary={
@@ -16,18 +16,15 @@ export default function TestVisibilitySelectRow(props: { hasError: boolean, setC
             />
             <Stack direction='row' spacing={4}>
                 <span />
-                <TestVisibilitySelect setClosed={props.setClosed} />
+                <TestVisibilitySelect closed={props.closed} setClosed={props.setClosed} />
             </Stack>
         </ListItem>
     )
 }
 
-function TestVisibilitySelect(props: { setClosed: (closed: boolean) => void }) {
-    const [visibility, setVisibility] = useState<string | undefined>()
-
+function TestVisibilitySelect(props: { closed: boolean | null, setClosed: (closed: boolean) => void }) {
     function handleChange(event: SelectChangeEvent) {
         const selected = event.target.value
-        setVisibility(selected)
         switch (selected) {
             case 'open':
                 props.setClosed(false)
@@ -42,7 +39,7 @@ function TestVisibilitySelect(props: { setClosed: (closed: boolean) => void }) {
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
             <Select
                 id="visibility-selectt"
-                value={visibility}
+                value={props.closed !== null ? (props.closed ? 'closed' : 'open') : ''}
                 onChange={handleChange}
             >
                 <MenuItem value={'open'}><Translator path='visibility_selector.open' /></MenuItem>

@@ -5,14 +5,7 @@ import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 import Translator from '../Translator/Translator';
 
-export default function FileUploadRow(props: { title: string, hasError: boolean, setFile: (file: File) => void, themeColor?: string }) {
-    const [filename, setFilename] = useState<string | null>(null)
-
-    function setFile(file: File) {
-        setFilename(file.name)
-        props.setFile(file)
-    }
-
+export default function FileUploadRow(props: { title: string, hasError: boolean, file: File | null, setFile: (file: File) => void, themeColor?: string }) {
     return (
         <ListItem key={props.title.replace(' ', '_') + '-upload_file'}>
             <ListItemText
@@ -22,12 +15,12 @@ export default function FileUploadRow(props: { title: string, hasError: boolean,
                         <Typography variant="h5" display='inline' color='error'> *</Typography>
                     </Fragment>
                 }
-                secondary={filename}
+                secondary={props.file?.name}
                 secondaryTypographyProps={props.themeColor ? {color: props.themeColor} : undefined}
             />
             <Stack direction='row' spacing={4}>
                 <span />
-                <FileUploadButton setFile={setFile} />
+                <FileUploadButton setFile={props.setFile} />
             </Stack>
         </ListItem>
     )

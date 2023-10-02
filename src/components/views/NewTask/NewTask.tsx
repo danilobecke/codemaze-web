@@ -123,7 +123,7 @@ function NewTask() {
                     <Stack direction='row' spacing={6}>
                         <List sx={{ minWidth: '48%' }}>
                             <TextFieldRow title={nameStr} required type='text' hasError={nameError} value={name} setValue={setName} />
-                            <FileUploadRow title={detailsStr} hasError={detailsError} setFile={setDetails} themeColor="white" />
+                            <FileUploadRow title={detailsStr} hasError={detailsError} file={details} setFile={setDetails} themeColor="white" />
                             <DateTimePickerRow title={startsOnStr} date={startsOn} setDate={setStatsOn} />
                             <DateTimePickerRow title={endsOnStr} date={endsOn} setDate={setEndsOn} />
                             <TextFieldRow title={maxAttmpStr} type='number' value={maxAttempts} setValue={setMaxAttempts} />

@@ -75,9 +75,9 @@ function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) =
                 </DialogTitle>
                 <DialogContent>
                     <List>
-                        <FileUploadRow title={inputStr} hasError={inputError} setFile={setInputFile} />
-                        <FileUploadRow title={outputStr} hasError={outputError} setFile={setOutputFile} />
-                        <TestVisibilitySelectRow hasError={kindError} setClosed={setClosed} />
+                        <FileUploadRow title={inputStr} hasError={inputError} file={inputFile} setFile={setInputFile} />
+                        <FileUploadRow title={outputStr} hasError={outputError} file={outputFile} setFile={setOutputFile} />
+                        <TestVisibilitySelectRow hasError={kindError} closed={closed} setClosed={setClosed} />
                     </List>
                 </DialogContent>
                 <DialogActions>
