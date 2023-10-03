@@ -13,6 +13,7 @@ import Row from "../../elements/Row/Row";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import { downloadFile } from "../../../services/Helpers";
+import TaskSettings from "../TaskSettings/TaskSettings";
 
 function TaskDetails() {
     const user = Session.getCurrentUser()
@@ -23,6 +24,8 @@ function TaskDetails() {
 
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
     useEffect(() => {
         async function fetch() {
@@ -46,7 +49,12 @@ function TaskDetails() {
     }
 
     function showSettings() {
+        setIsSettingsOpen(true)
+    }
 
+    function closeSettings(task?: Task) {
+        // TODO: change useEffect dependencies
+        setIsSettingsOpen(false)
     }
 
     async function showDetails() {
@@ -103,6 +111,7 @@ function TaskDetails() {
             </Container>
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <TaskSettings task={task} show={isSettingsOpen} onClose={closeSettings} />
         </div>
     )
 }

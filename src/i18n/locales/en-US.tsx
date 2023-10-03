@@ -130,6 +130,9 @@ export default {
             maxAttempts: 'Maximum attempts',
             addLanguage: '+ add allowed language',
         },
+        task_settings: {
+            title: 'Update Task',
+        },
         language_selector: {
             title: 'Allowed language',
         },

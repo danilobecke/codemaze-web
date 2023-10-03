@@ -130,6 +130,9 @@ export default {
             maxAttempts: 'Máximo de tentativas permitidas',
             addLanguage: '+ adicionar linguagem permitida',
         },
+        task_settings: {
+            title: 'Atualizar Tarefa',
+        },
         language_selector: {
             title: 'Linguagem permitida',
         },
