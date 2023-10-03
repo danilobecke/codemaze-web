@@ -29,3 +29,7 @@ export async function downloadFile(url: string, filenameFallback: string, setIsL
 export function maybeOrNull<T>(validator: AnyTypeValidation<T>) {
     return maybe(validator, true)
 }
+
+export function zip3<T, U, V>(a: T[], b: U[], c: V[]): [T, U, V][] {
+    return a.map((element, index) => [element, b[index], c[index]])
+}

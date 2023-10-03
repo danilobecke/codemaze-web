@@ -110,6 +110,7 @@ export default {
             title: 'Novo Teste',
             input: 'Entrada',
             output: 'Saída',
+            cardTitle: 'Teste {{position}}',
         },
         visibility_selector: {
             title: 'Tipo',
@@ -124,6 +125,8 @@ export default {
             endsOn: 'Término',
             maxAttempts: 'Máximo de tentativas permitidas',
             addLanguage: '+ adicionar linguagem permitida',
+            tests: 'Testes',
+            addTest: '+ adicionar teste',
         },
         language_selector: {
             title: 'Linguagem permitida',
