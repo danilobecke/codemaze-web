@@ -119,14 +119,16 @@ export default {
         },
         new_task: {
             title: 'Nova Tarefa',
+            tests: 'Testes',
+            addTest: '+ adicionar teste',
+        },
+        add_task: {
             name: 'Título',
             details: 'Enunciado',
             startsOn: 'Início',
             endsOn: 'Término',
             maxAttempts: 'Máximo de tentativas permitidas',
             addLanguage: '+ adicionar linguagem permitida',
-            tests: 'Testes',
-            addTest: '+ adicionar teste',
         },
         language_selector: {
             title: 'Linguagem permitida',

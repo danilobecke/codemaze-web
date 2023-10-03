@@ -119,14 +119,16 @@ export default {
         },
         new_task: {
             title: 'New Task',
+            tests: 'Tests',
+            addTest: '+ add test',
+        },
+        add_task: {
             name: 'Title',
             details: 'Details',
             startsOn: 'Starts on',
             endsOn: 'Ends on',
             maxAttempts: 'Maximum attempts',
             addLanguage: '+ add allowed language',
-            tests: 'Tests',
-            addTest: '+ add test',
         },
         language_selector: {
             title: 'Allowed language',

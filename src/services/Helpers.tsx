@@ -33,3 +33,23 @@ export function maybeOrNull<T>(validator: AnyTypeValidation<T>) {
 export function zip3<T, U, V>(a: T[], b: U[], c: V[]): [T, U, V][] {
     return a.map((element, index) => [element, b[index], c[index]])
 }
+
+export class MultipleInput<T> {
+    value?: T
+
+    constructor(value?: T) {
+        this.value = value
+    }
+}
+
+export function setOn<T>(setFunction: (value: T[]) => void, current: T[], value: T, index: number) {
+    setFunction(current.slice(0, index).concat(value).concat(current.slice(index + 1)))
+}
+
+export function addOn<T>(setFunction: (value: T[]) => void, current: T[], value: T) {
+    setFunction([...current, value])
+}
+
+export function removeFrom<T>(setFunction: (value: T[]) => void, current: T[], index: number) {
+    setFunction(current.slice(0, index).concat(current.slice(index + 1)))
+}
