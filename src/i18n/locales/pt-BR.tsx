@@ -46,6 +46,7 @@ export default {
         },
         snackbar: {
             success: 'Sucesso',
+            error: 'Erro',
         },
         group: {
             code: 'Código',
