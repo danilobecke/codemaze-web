@@ -58,8 +58,8 @@ function getRequestOptions(method: Method, authenticated: boolean, headers?: Hea
     return requestOptions
 }
 
-function getFormDataRequestOptions(authenticated: boolean, body: FormData): RequestInit {
-    const options = getRequestOptions(Method.POST, authenticated)
+function getFormDataRequestOptions(method: Method, authenticated: boolean, body: FormData): RequestInit {
+    const options = getRequestOptions(method, authenticated)
     options.body = body
     return options
 }
@@ -149,10 +149,18 @@ export async function getFileURL(path: string, setIsLoading: (isLoading: boolean
         .finally(() => setIsLoading(false))
 }
 
-export async function sendFormData<T extends BaseObject>(endpoint: string, data: FormData, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+async function _executeFormData<T extends BaseObject>(endpoint: string, method: Method, data: FormData, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
     setIsLoading(true)
-    return fetch(endpoint, getFormDataRequestOptions(authenticated, data))
+    return fetch(endpoint, getFormDataRequestOptions(method, authenticated, data))
         .then(response => getJson(response))
         .then(data => parse(data, objectType))
         .finally(() => setIsLoading(false))
+}
+
+export async function sendFormData<T extends BaseObject>(endpoint: string, data: FormData, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+    return _executeFormData(endpoint, Method.POST, data, objectType, setIsLoading, authenticated)
+}
+
+export async function patchFormData<T extends BaseObject>(endpoint: string, data: FormData, objectType: new () => T, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true): Promise<T> {
+    return _executeFormData(endpoint, Method.PATCH, data, objectType, setIsLoading, authenticated)
 }
