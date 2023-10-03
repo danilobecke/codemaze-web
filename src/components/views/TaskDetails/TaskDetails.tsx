@@ -21,6 +21,7 @@ function TaskDetails() {
     const navigate = useNavigate()
 
     const [task, setTask] = useState<Task | null>(null)
+    const [count, setCount] = useState(0)
 
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -42,7 +43,7 @@ function TaskDetails() {
                     alert(error) // fallback
                 }
             })
-    }, [task?.name, task?.startsOn])
+    }, [count])
 
     function showSubmit() {
 
@@ -52,9 +53,11 @@ function TaskDetails() {
         setIsSettingsOpen(true)
     }
 
-    function closeSettings(task?: Task) {
-        // TODO: change useEffect dependencies
+    function closeSettings(shouldRefresh?: boolean) {
         setIsSettingsOpen(false)
+        if (shouldRefresh) {
+            setCount(count + 1)
+        }
     }
 
     async function showDetails() {
