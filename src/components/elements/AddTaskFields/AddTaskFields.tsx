@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useState } from "react";
 
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import { Theme } from "@emotion/react";
 import { Button, List, SxProps } from "@mui/material";
 
@@ -10,12 +10,14 @@ import DateTimePickerRow from "../DateTimePickerRow/DateTimePickerRow";
 import Translator from "../Translator/Translator";
 import { MultipleInput, addOn, removeFrom, setOn } from "../../../services/Helpers";
 import LanguageSelectRow from "../LanguageSelectRow/LanguageSelectRow";
+import Task from "../../../models/Task";
 
 export type AddTaskHandler = {
     getFormData: () => FormData | null
 }
 
 export type AddTaskFieldsProps = {
+    task?: Task
     sx?: SxProps<Theme>
 }
 
@@ -26,12 +28,12 @@ const AddTaskFields = forwardRef<AddTaskHandler, AddTaskFieldsProps>((props, ref
     const endsOnStr = Translator({ path: 'add_task.endsOn' })
     const maxAttmpStr = Translator({ path: 'add_task.maxAttempts' })
 
-    const [name, setName] = useState<String | null>(null)
+    const [name, setName] = useState<String | null>(props.task?.name ?? null)
     const [details, setDetails] = useState<File | null>(null)
-    const [startsOn, setStatsOn] = useState<Dayjs | null>(null)
-    const [endsOn, setEndsOn] = useState<Dayjs | null>(null)
-    const [maxAttempts, setMaxAttpts] = useState<number | null>(null)
-    const [languages, setLanguages] = useState<MultipleInput<string>[]>([new MultipleInput()])
+    const [startsOn, setStatsOn] = useState<Dayjs | null>(props.task ? dayjs(props.task.starts_on) : null)
+    const [endsOn, setEndsOn] = useState<Dayjs | null>(props.task?.ends_on ? dayjs(props.task.ends_on) : null)
+    const [maxAttempts, setMaxAttpts] = useState<number | null>(props.task?.max_attempts ?? null)
+    const [languages, setLanguages] = useState<MultipleInput<string>[]>(props.task ? props.task.languages.map(element => new MultipleInput(element)) : [new MultipleInput()])
 
     const [nameError, setNameError] = useState(false)
     const [detailsError, setDetailsError] = useState(false)
@@ -49,7 +51,7 @@ const AddTaskFields = forwardRef<AddTaskHandler, AddTaskFieldsProps>((props, ref
     }
 
     function toLanguageRow(language: MultipleInput<string>, index: number) {
-        return <LanguageSelectRow position={index} required={index === 0} hasError={index === 0 && languageError} onDelete={index !== 0 ? deleteLanguageRow : undefined} language={language.value ?? ''} setLanguage={setLanguage} />
+        return <LanguageSelectRow position={index} required={!props.task && index === 0} hasError={index === 0 && languageError} onDelete={index !== 0 ? deleteLanguageRow : undefined} language={language.value ?? ''} setLanguage={setLanguage} themeColor={props.task ? 'CaptionText' : undefined} />
     }
 
     function addLanguageRow() {
@@ -62,18 +64,24 @@ const AddTaskFields = forwardRef<AddTaskHandler, AddTaskFieldsProps>((props, ref
 
     useImperativeHandle(ref, () => ({
         getFormData() {
-            const _nameError = !name
-            setNameError(_nameError)
-            const _detailsError = !details
-            setDetailsError(_detailsError)
-            const _languageError = !languages[0].value
-            setLanguageError(_languageError)
-            if (_nameError || _detailsError || _languageError) {
-                return null
+            if (!props.task) {
+                const _nameError = !name
+                setNameError(_nameError)
+                const _detailsError = !details
+                setDetailsError(_detailsError)
+                const _languageError = !languages[0].value
+                setLanguageError(_languageError)
+                if (_nameError || _detailsError || _languageError) {
+                    return null
+                }
             }
             const formData = new FormData()
-            formData.append('name', name!.toString())
-            formData.append('file', details!)
+            if (name) {
+                formData.append('name', name.toString())
+            }
+            if (details) {
+                formData.append('file', details)
+            }
             for (const language of new Set(languages.map(element => element.value))) {
                 if (!language) {
                     continue
@@ -95,11 +103,11 @@ const AddTaskFields = forwardRef<AddTaskHandler, AddTaskFieldsProps>((props, ref
 
     return (
         <List sx={props.sx}>
-            <TextFieldRow title={nameStr} required type='text' hasError={nameError} value={name} setValue={setName} />
-            <FileUploadRow title={detailsStr} hasError={detailsError} file={details} setFile={setDetails} themeColor="white" />
-            <DateTimePickerRow title={startsOnStr} date={startsOn} setDate={setStatsOn} />
-            <DateTimePickerRow title={endsOnStr} date={endsOn} setDate={setEndsOn} />
-            <TextFieldRow title={maxAttmpStr} type='number' value={maxAttempts} setValue={setMaxAttempts} />
+            <TextFieldRow title={nameStr} required={!props.task} type='text' hasError={nameError} value={name} setValue={setName} themeColor={props.task ? 'CaptionText' : undefined} />
+            <FileUploadRow title={detailsStr} required={!props.task} hasError={detailsError} file={details} setFile={setDetails} themeColor={props.task ? undefined : "white"} />
+            <DateTimePickerRow title={startsOnStr} date={startsOn} minDate={!props.task ? dayjs() : undefined} setDate={setStatsOn} themeColor={props.task ? 'CaptionText' : undefined} />
+            <DateTimePickerRow title={endsOnStr} date={endsOn} minDate={!props.task ? dayjs() : undefined} setDate={setEndsOn} themeColor={props.task ? 'CaptionText' : undefined} />
+            <TextFieldRow title={maxAttmpStr} type='number' value={maxAttempts} setValue={setMaxAttempts} themeColor={props.task ? 'CaptionText' : undefined} />
             {languages.map(toLanguageRow)}
             <Button variant="text" onClick={addLanguageRow}><Translator path="add_task.addLanguage" /></Button>
         </List>
