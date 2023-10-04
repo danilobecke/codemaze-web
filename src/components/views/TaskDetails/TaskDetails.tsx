@@ -14,6 +14,8 @@ import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import { downloadFile } from "../../../services/Helpers";
 import TaskSettings from "../TaskSettings/TaskSettings";
+import SendCode from "../SendCode/SendCode";
+import { Result } from "../../../models/Result";
 
 function TaskDetails() {
     const user = Session.getCurrentUser()
@@ -27,6 +29,7 @@ function TaskDetails() {
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+    const [isSubmitCodeOpen, setIsSubmitCodeOpen] = useState(false)
 
     useEffect(() => {
         async function fetch() {
@@ -46,7 +49,12 @@ function TaskDetails() {
     }, [count])
 
     function showSubmit() {
+        setIsSubmitCodeOpen(true)
+    }
 
+    function closeSubmit(result?: Result) {
+        setIsSubmitCodeOpen(false)
+        // TODO: show result
     }
 
     function showSettings() {
@@ -115,6 +123,7 @@ function TaskDetails() {
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
             <TaskSettings task={task} show={isSettingsOpen} onClose={closeSettings} />
+            <SendCode show={isSubmitCodeOpen} close={closeSubmit} />
         </div>
     )
 }

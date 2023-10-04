@@ -47,7 +47,7 @@ function TaskSettings(props: { task: Task | null, show: boolean, onClose: (shoul
                 </DialogActions>
             </Dialog>
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
-            <Loader show={false} />
+            <Loader show={isLoading} />
         </div>
     )
 }

@@ -136,5 +136,9 @@ export default {
         language_selector: {
             title: 'Linguagem permitida',
         },
+        send_code: {
+            title: 'Enviar Código',
+            row: 'Arquivo',
+        },
     }
 }
