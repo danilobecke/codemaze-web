@@ -21,6 +21,7 @@ import NewTask from "./components/views/NewTask/NewTask";
 import NotFound from "./components/views/NotFound/NotFound";
 
 import './App.css';
+import ResultDetails from "./components/views/ResultDetails/ResultDetails";
 
 const ProtectedRoute = (props: { children: ReactElement }) => {
   if (!Session.getCurrentUser()) {
@@ -70,6 +71,11 @@ function App() {
               <Route path="/tasks/:taskID/tests" element={
                 <ProtectedRoute>
                   <TestsList />
+                </ProtectedRoute>
+              } />
+              <Route path="/tasks/:taskID/result" element={
+                <ProtectedRoute>
+                  <ResultDetails />
                 </ProtectedRoute>
               } />
               <Route path="*" element={<NotFound />} />

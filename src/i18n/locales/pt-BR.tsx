@@ -140,5 +140,8 @@ export default {
             title: 'Enviar Código',
             row: 'Arquivo',
         },
+        result_details: {
+            title: 'Resultado',
+        },
     }
 }

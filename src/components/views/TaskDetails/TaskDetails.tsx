@@ -54,7 +54,9 @@ function TaskDetails() {
 
     function closeSubmit(result?: Result) {
         setIsSubmitCodeOpen(false)
-        // TODO: show result
+        if (result) {
+            showLatestResult()
+        }
     }
 
     function showSettings() {
@@ -80,7 +82,7 @@ function TaskDetails() {
     }
 
     function showLatestResult() {
-
+        navigate('result')
     }
 
     function showReport() {

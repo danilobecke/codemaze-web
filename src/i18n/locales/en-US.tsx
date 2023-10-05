@@ -140,5 +140,8 @@ export default {
             title: 'Submit Code',
             row: 'File',
         },
+        result_details: {
+            title: 'Result',
+        },
     }
 }
