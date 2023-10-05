@@ -142,6 +142,17 @@ export default {
         },
         result_details: {
             title: 'Resultado',
+            numberAttempts: 'Número de tentativas: {{number}}',
+            getCode: 'Download do código',
+            open: 'Testes Abertos',
+            closed: 'Testes Fechados',
+            cardTitle: 'Teste {{index}}',
+            cardSuccess: 'Sucesso 🚀',
+            cardError: 'Erro ❌',
         },
+        pie_chart: {
+            success: 'Acertos',
+            error: 'Erros',
+        }
     }
 }
