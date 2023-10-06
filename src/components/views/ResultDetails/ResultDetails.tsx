@@ -74,7 +74,7 @@ function ResultDetails() {
                         <div>
                             <Stack direction='row' justifyContent='space-between' alignItems='center'>
                                 <Typography variant="h1"><Translator path="result_details.title" /></Typography>
-                                <PercentagePieChart percentageCorrect={result.result_percentage} />
+                                <PercentagePieChart percentageCorrect={result.result_percentage} size={{ width: 375, height: 150 }} />
                             </Stack>
                             <Typography variant="h5"><Translator path="result_details.numberAttempts" arguments={{ number: result.attempt_number }} /></Typography>
                             <Typography variant="h5" sx={{ ['& :hover']: { cursor: 'pointer' } }}><Link onClick={downloadCode}><Translator path='result_details.getCode' /></Link></Typography>

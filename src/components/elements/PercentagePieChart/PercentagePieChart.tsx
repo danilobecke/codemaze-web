@@ -2,7 +2,7 @@ import { PieChart, pieArcLabelClasses } from "@mui/x-charts";
 
 import Translator from "../../elements/Translator/Translator";
 
-function PercentagePieChart(props: { percentageCorrect: number }) {
+function PercentagePieChart(props: { percentageCorrect: number, size?: { width: number, height: number } }) {
     const data = [
         { label: Translator({ path: 'pie_chart.success' }), value: props.percentageCorrect, color: 'green' },
         { label: Translator({ path: 'pie_chart.error' }), value: 100 - props.percentageCorrect, color: 'red' }
@@ -30,7 +30,7 @@ function PercentagePieChart(props: { percentageCorrect: number }) {
                     display: 'none'
                 },
             }}
-            {...size}
+            {...props.size ?? size}
         />
     )
 }
