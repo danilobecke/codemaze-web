@@ -16,11 +16,11 @@ export function getInputValue(element_name: string, setError: ((error: boolean) 
     return !value ? null : value
 }
 
-export async function downloadFile(url: string, filenameFallback: string, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true) {
+export async function downloadFile(url: string, filenameFallback: string, setIsLoading: (isLoading: boolean) => void, authenticated: boolean = true, useRemoteFilename: boolean = true) {
     const file = await getFileURL(url, setIsLoading, authenticated)
     const link = document.createElement('a')
     link.href = file.url
-    link.download = file.filename ?? filenameFallback
+    link.download = useRemoteFilename ? (file.filename ?? filenameFallback) : filenameFallback
     document.body.appendChild(link)
     link.click()
     link.parentNode?.removeChild(link)

@@ -90,16 +90,19 @@ export default {
             latestResult: 'Latest Result',
             report: 'Report',
         },
+        test_row: {
+            test: 'Test',
+            input: 'Input',
+            output: 'Output',
+            delete: 'Delete',
+        },
         tests: {
             newTest: 'New Test',
             title: 'Tests',
             open: 'Open Tests',
             test: 'Test',
             tests: 'Tests',
-            input: 'Input',
-            output: 'Output',
             closed: 'Closed Tests',
-            delete: 'Delete',
             empty: 'No tests...',
         },
         test_deletion: {
@@ -151,8 +154,8 @@ export default {
             cardError: 'Error ❌',
         },
         pie_chart: {
-            success: 'Success',
-            error: 'Error',
-        }
+            success: 'Success %',
+            error: 'Error %',
+        },
     }
 }

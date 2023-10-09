@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button, Container, Link, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { Button, Container, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 
 import Session from "../../../services/Session";
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
@@ -11,9 +11,9 @@ import { get, v1Namespace } from "../../../services/ApiService";
 import { AllTests } from "../../../models/AllTests";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
-import { downloadFile } from "../../../services/Helpers";
 import TestDeletionConfirmation, { TestDeletionConfirmationProps } from "../TestDeletionConfirmation/TestDeletionConfirmation";
 import NewTestCase from "../NewTestCase/NewTestCase";
+import TestRow from "../../elements/TestRow/TestRow";
 
 function TestsList() {
     const { taskID } = useParams()
@@ -24,11 +24,8 @@ function TestsList() {
     const [isLoading, setIsLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-    const hoverPointerSX = { "&:hover": { 'cursor': 'pointer' } }
     const testStr = Translator({ path: 'tests.test' })
     const testsStr = Translator({ path: 'tests.tests' })
-    const inputStr = Translator({ path: 'tests.input' })
-    const outputStr = Translator({ path: 'tests.output' })
 
     const [deletionProps, setDeletionProps] = useState<TestDeletionConfirmationProps | null>(null)
     const [showNewTest, setShowNewTest] = useState(false)
@@ -70,20 +67,9 @@ function TestsList() {
     function rows(tests: TestCase[]) {
         let rows: JSX.Element[] = []
         for (const [index, test] of tests.entries()) {
-            rows.push(toRow(index + 1, test))
+            rows.push(<TestRow test={test} position={index + 1} setIsLoading={setIsLoading} deleteTouched={!user || user.role === 'student' ? undefined : showDelete} />)
         }
         return rows
-    }
-
-    function toRow(position: number, test: TestCase) {
-        return <ListItem key={test.id}>
-            <ListItemText primary={testStr + ' ' + position} primaryTypographyProps={{ variant: 'h5' }} />
-            <Stack direction='row' spacing={4}>
-                {test.input_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => downloadFile(test.input_url!, 'test.in', setIsLoading)}>{inputStr}</Link></Typography> : null}
-                {test.output_url ? <Typography variant="h5"><Link sx={hoverPointerSX} onClick={() => downloadFile(test.output_url!, 'test.out', setIsLoading)}>{outputStr}</Link></Typography> : null}
-                {!user || user.role === 'student' ? null : <Button variant="outlined" color="error" onClick={() => showDelete(test, position)}><Translator path='tests.delete' /></Button>}
-            </Stack>
-        </ListItem>
     }
 
     function showDelete(test: TestCase, position: number) {

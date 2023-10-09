@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Container, Link, Stack, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
 
 import { Result, TestCaseResult } from "../../../models/Result";
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
@@ -12,6 +12,7 @@ import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import PercentagePieChart from "../../elements/PercentagePieChart/PercentagePieChart";
 import { downloadFile } from "../../../services/Helpers";
 import ResultCard from "../../elements/ResultCard/ResultCard";
+import LinkItem from "../../elements/LinkItem/LinkItem";
 
 
 function ResultDetails() {
@@ -19,6 +20,7 @@ function ResultDetails() {
 
     const openResultsStr = Translator({ path: "result_details.open" })
     const closedResultsStr = Translator({ path: "result_details.closed" })
+    const downloadCodeStr = Translator({ path: 'result_details.getCode' })
 
     const [result, setResult] = useState<Result | null>(null)
 
@@ -42,15 +44,13 @@ function ResultDetails() {
 
     function resultSection(title: string, percentage: number, results: TestCaseResult[]) {
         return (
-            <div>
-                <Stack direction='row' justifyContent='space-between' alignItems='center'>
+            <Stack direction='column' spacing={1} alignItems='start'>
+                <Stack direction='row' alignItems='center'>
                     <Typography variant="h2">{title}</Typography>
                     <PercentagePieChart percentageCorrect={percentage} />
                 </Stack>
-                <Stack direction='column' spacing={1} alignItems='start'>
-                    {results.map(toCard)}
-                </Stack>
-            </div>
+                {results.map(toCard)}
+            </Stack>
         )
     }
 
@@ -72,12 +72,12 @@ function ResultDetails() {
                 <Container>
                     <Stack direction='column' spacing={4}>
                         <div>
-                            <Stack direction='row' justifyContent='space-between' alignItems='center'>
+                            <Stack direction='row' alignItems='center'>
                                 <Typography variant="h1"><Translator path="result_details.title" /></Typography>
                                 <PercentagePieChart percentageCorrect={result.result_percentage} size={{ width: 375, height: 150 }} />
                             </Stack>
                             <Typography variant="h5"><Translator path="result_details.numberAttempts" arguments={{ number: result.attempt_number }} /></Typography>
-                            <Typography variant="h5" sx={{ ['& :hover']: { cursor: 'pointer' } }}><Link onClick={downloadCode}><Translator path='result_details.getCode' /></Link></Typography>
+                            <LinkItem onClick={downloadCode} title={downloadCodeStr} />
                         </div>
                         {resultSection(openResultsStr, result.open_result_percentage, result.open_results)}
                         {!result.closed_result_percentage ? null :
