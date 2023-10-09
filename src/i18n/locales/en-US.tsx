@@ -157,5 +157,24 @@ export default {
             success: 'Success %',
             error: 'Error %',
         },
+        report_details: {
+            title: 'Report',
+            overall: 'Overall',
+            students: 'Students',
+            tests: 'Tests',
+        },
+        overall_details: {
+            submissionPercentage: 'Submissions percentage',
+            submissions: 'Submissions %',
+            noSubmissions: 'No submissions %',
+            meanSuccess: 'Average number of attempts to succeed in all tests',
+            plagiarismReport: 'Open plagiarism report',
+            testsCardTitle: 'Tests with more failures',
+            openTests: 'Open Tests',
+            closedTests: 'Closed Tests',
+            results: 'Results',
+            students: 'Students',
+            result: 'Result',
+        },
     }
 }

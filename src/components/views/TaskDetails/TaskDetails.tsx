@@ -86,7 +86,7 @@ function TaskDetails() {
     }
 
     function showReport() {
-
+        navigate('report')
     }
 
     return (

@@ -157,5 +157,24 @@ export default {
             success: 'Acertos %',
             error: 'Erros %',
         },
+        report_details: {
+            title: 'Relatório',
+            overall: 'Geral',
+            students: 'Alunos',
+            tests: 'Testes',
+        },
+        overall_details: {
+            submissionPercentage: 'Porcentagem de envios',
+            submissions: 'Envios %',
+            noSubmissions: 'Não enviados %',
+            meanSuccess: 'Média de tentativas para obter sucesso em todos os testes',
+            plagiarismReport: 'Abrir relatório de plágio',
+            testsCardTitle: 'Testes com mais erros',
+            openTests: 'Testes Abertos',
+            closedTests: 'Testes Fechados',
+            results: 'Resultados',
+            students: 'Alunos',
+            result: 'Resultado',
+        },
     }
 }
