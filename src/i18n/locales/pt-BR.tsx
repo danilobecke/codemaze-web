@@ -176,5 +176,12 @@ export default {
             students: 'Alunos',
             result: 'Resultado',
         },
+        student_details: {
+            attempts: 'Número de tentativas',
+            download_code: 'Download do código',
+            open_results: 'Testes Abertos',
+            closed_results: 'Testes Fechados',
+            wrong_tests: 'Testes errados',
+        },
     }
 }

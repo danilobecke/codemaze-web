@@ -176,5 +176,12 @@ export default {
             students: 'Students',
             result: 'Result',
         },
+        student_details: {
+            attempts: 'Attempts count',
+            download_code: 'Download code',
+            open_results: 'Open Tests',
+            closed_results: 'Closed Tests',
+            wrong_tests: 'Wrong tests',
+        },
     }
 }

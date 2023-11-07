@@ -72,6 +72,7 @@ export class OverallReport implements BaseObject {
 }
 
 export class StudentReport implements BaseObject {
+    id: number
     name: string
     open_result_percentage: number
     closed_result_percentage: number | null
@@ -81,6 +82,7 @@ export class StudentReport implements BaseObject {
     wrong_tests_id: number[]
 
     constructor() {
+        this.id = -1
         this.name = ''
         this.open_result_percentage = -1
         this.closed_result_percentage = null
@@ -91,6 +93,7 @@ export class StudentReport implements BaseObject {
     }
 
     static isStudentReport = objectOf({
+        id: primitives.number,
         name: primitives.string,
         open_result_percentage: primitives.number,
         closed_result_percentage: maybeOrNull(primitives.number),
