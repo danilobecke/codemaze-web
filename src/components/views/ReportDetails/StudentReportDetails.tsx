@@ -14,9 +14,9 @@ import TestRow from "../../elements/TestRow/TestRow";
 function StudentReportDetails(props: { visible: boolean, report?: StudentReport[], tests?: AllTests, setIsLoading: (isLoading: boolean) => void }) {
     const [studentReport, setStudentReport] = useState<StudentReport | null>(null)
 
-    const downloadCodeStr = Translator({ path: 'student_details.download_code' })
-    const openTestsStr = Translator({ path: 'student_details.open_results' })
-    const closedTestsStr = Translator({ path: 'student_details.closed_results' })
+    const downloadCodeStr = Translator({ path: 'student_details.downloadCode' })
+    const openTestsStr = Translator({ path: 'student_details.openResults' })
+    const closedTestsStr = Translator({ path: 'student_details.closedResults' })
 
     function setStudentReportFromID(id: number) {
         const report = props.report?.find(value => value.id === id)
@@ -126,7 +126,7 @@ function TestsCard(props: { title: string, result: number, tests: PositionTest[]
                     </Stack>
                     {props.tests.length === 0 ? null :
                         <div>
-                            <Typography variant="h5"><Translator path="student_details.wrong_tests" /></Typography>
+                            <Typography variant="h5"><Translator path="student_details.wrongTests" /></Typography>
                             {props.tests.map(toTestRow)}
                         </div>
                     }

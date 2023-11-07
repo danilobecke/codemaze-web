@@ -178,10 +178,10 @@ export default {
         },
         student_details: {
             attempts: 'Attempts count',
-            download_code: 'Download code',
-            open_results: 'Open Tests',
-            closed_results: 'Closed Tests',
-            wrong_tests: 'Wrong tests',
+            downloadCode: 'Download code',
+            openResults: 'Open Tests',
+            closedResults: 'Closed Tests',
+            wrongTests: 'Wrong tests',
         },
         tests_details: {
             open: 'Open Tests',
