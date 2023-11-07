@@ -173,8 +173,8 @@ export default {
             openTests: 'Testes Abertos',
             closedTests: 'Testes Fechados',
             results: 'Resultados',
-            students: 'Alunos',
-            result: 'Resultado',
+            students: 'Alunos (%)',
+            result: 'Desempenho',
         },
         student_details: {
             attempts: 'Número de tentativas',
