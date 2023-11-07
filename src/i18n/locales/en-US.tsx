@@ -183,5 +183,9 @@ export default {
             closed_results: 'Closed Tests',
             wrong_tests: 'Wrong tests',
         },
+        tests_details: {
+            open: 'Open Tests',
+            closed: 'Closed Tests',
+        },
     }
 }

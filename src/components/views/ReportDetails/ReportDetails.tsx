@@ -74,7 +74,7 @@ function ReportDetails() {
                     }
                     <OverallReportDetails visible={selectedTab === ReportTab.Overall} report={report?.overall} tests={tests} setIsLoading={setIsLoadingTests} />
                     <StudentReportDetails visible={selectedTab === ReportTab.Students} report={report?.students} tests={tests} setIsLoading={setIsLoadingTests}/>
-                    <TestReportDetails visible={selectedTab === ReportTab.Tests} report={report?.tests} />
+                    <TestReportDetails visible={selectedTab === ReportTab.Tests} report={report?.tests} tests={tests} setIsLoading={setIsLoadingTests} />
                 </Stack>
             </Container>
             <Loader show={isLoadingReport || isLoadingTests} />
