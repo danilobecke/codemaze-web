@@ -1,7 +1,8 @@
 import Session from "./Session";
 
 // Base URL
-const base_url = 'http://127.0.0.1:8080'
+const { REACT_APP_API_URL } = process.env 
+const base_url = REACT_APP_API_URL ?? "undefined"
 
 // get URL
 export function v1Namespace(route: string, params: { key: string, value: any }[] | null = null): string {

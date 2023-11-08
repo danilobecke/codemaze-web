@@ -13,6 +13,8 @@ import './Landing.css'
 
 function Landing() {
     const navigate = useNavigate()
+    const { REACT_APP_SCHOOL_NAME } = process.env
+
     // Sign In
     const [showSignIn, setShowSignIn] = useState(false)
     function openSignIn() { 
@@ -36,7 +38,7 @@ function Landing() {
             </NavigationBar>
             <div className='Landing-content'>
                 <Typography variant='h1'>Codemaze</Typography>
-                <Typography variant='h4'>[School Name]</Typography>
+                <Typography variant='h4'>{REACT_APP_SCHOOL_NAME ?? "[School Name]"}</Typography>
             </div>
             <SignIn show={showSignIn} close={closeSignIn} />
             <SignUp show={showSignUp} close={closeSignUp} />
