@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Container, Stack, Typography } from "@mui/material";
 
@@ -14,8 +14,8 @@ import { downloadFile } from "../../../services/Helpers";
 import ResultCard from "../../elements/ResultCard/ResultCard";
 import LinkItem from "../../elements/LinkItem/LinkItem";
 
-
 function ResultDetails() {
+    const navigate = useNavigate()
     const { taskID } = useParams()
 
     const openResultsStr = Translator({ path: "result_details.open" })
@@ -65,6 +65,10 @@ function ResultDetails() {
         downloadFile(result.source_url, 'code', setIsLoading)
     }
 
+    function dismiss() {
+        navigate(-1) // go back
+    }
+
     return (
         <div>
             <NavigationBar />
@@ -87,7 +91,7 @@ function ResultDetails() {
                 </Container>
             }
             <Loader show={isLoading} />
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast message={errorMessage} setError={setErrorMessage} onClose={dismiss} />
         </div>
     )
 }
