@@ -14,6 +14,8 @@ import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import Translator from "../../elements/Translator/Translator";
 import ManageRequest from "../ManageRequest/ManageRequest";
 import AppContainer from "../../elements/AppContainer/AppContainer";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 function StudentsList() {
     const { groupID } = useParams()
@@ -23,7 +25,7 @@ function StudentsList() {
     const [students, setStudents] = useState<PublicUser[]>([])
 
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     const [showManageRequest, setShowManageRequest] = useState(false)
     const [selectedJoinRequest, setSelectedJoinRequest] = useState<JoinRequest>(new JoinRequest())
@@ -45,11 +47,7 @@ function StudentsList() {
         }
         fetch()
             .catch((error) => {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message)
-                } else {
-                    alert(error) // fallback
-                }
+                handleError(error, setAppError)
             })
     }, [groupID, requests.length, students.length])
 
@@ -119,7 +117,7 @@ function StudentsList() {
             </AppContainer>
             <ManageRequest show={showManageRequest} onClose={manageRequestOnClose} request={selectedJoinRequest}/>
             <Loader show={isLoading} />
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
         </div>
     )
 }

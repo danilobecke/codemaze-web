@@ -1,3 +1,4 @@
+import { AppError } from "../models/AppError";
 import Session from "./Session";
 
 // Base URL
@@ -49,7 +50,7 @@ function getRequestOptions(method: Method, authenticated: boolean, headers?: Hea
     if (authenticated) {
         const user = Session.getCurrentUser()
         if (!user) {
-            throw Error('Sign in before proceeding with this request.')
+            throw new AppError('401 - UNAUTHORIZED', 'Sign in before proceeding with this request.')
         }
         requestOptions.headers = {
             ...requestOptions.headers,
@@ -74,31 +75,39 @@ function jsonReplacer(key: string, value: any) {
 }
 
 function getJson(response: Response): Promise<any> {
-    return assertResponse(response).json()
+    return assertResponse(response)
+        .then(_response => _response.json())
 }
 
-function assertResponse(response: Response): Response {
+async function assertResponse(response: Response): Promise<Response> {
     if (response.ok) {
-        return response
+        return Promise.resolve(response)
     }
     const status = response.status
+    const errorTitle = status + ' - ' + response.statusText
     if (status === 401) {
         Session.logOut()
     }
-    throw new Error(status + ' - ' + response.statusText)
+    if (status === 404) {
+        throw new AppError('', errorTitle)
+    }
+    return response.json().then((json: any) => {
+        throw new AppError(errorTitle, json['message'])
+    })
 }
 
 function getFile(response: Response): Promise<File> {
     const validResponse = assertResponse(response)
     const filename = response.headers.get('Content-Disposition')?.match(/filename=(.*)/)?.at(1)
-    return validResponse.blob()
+    return validResponse
+        .then(_response => _response.blob())
         .then(blob => new File(window.URL.createObjectURL(blob), filename))
 }
 
 function parse<T extends BaseObject>(data: any, objectType: new () => T): T {
     const newObject = new objectType()
     if (!newObject.isValid(data)) {
-        throw new Error('Unable to parse "' + newObject.constructor.name + '" from:\n' + JSON.stringify(data))
+        throw new AppError('', 'Unable to parse "' + newObject.constructor.name + '" from:\n' + JSON.stringify(data))
     }
     return Object.assign(newObject, data)
 }

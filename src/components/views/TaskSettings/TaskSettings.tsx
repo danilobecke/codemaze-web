@@ -9,13 +9,15 @@ import { patchFormData, v1Namespace } from "../../../services/ApiService";
 import { TaskSummary } from "../../../models/TaskSummary";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import Loader from "../../elements/Loader/Loader";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 function TaskSettings(props: { task: Task | null, show: boolean, onClose: (shouldRefresh?: boolean) => void }) {
 
     const ref = useRef<AddTaskHandler>(null)
 
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     async function submit() {
         const formData = ref.current?.getFormData()
@@ -26,11 +28,7 @@ function TaskSettings(props: { task: Task | null, show: boolean, onClose: (shoul
             await patchFormData(v1Namespace('tasks/' + props.task.id), formData, TaskSummary, setIsLoading)
             props.onClose(true)
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
 
@@ -46,7 +44,7 @@ function TaskSettings(props: { task: Task | null, show: boolean, onClose: (shoul
                     <Button variant='contained' onClick={submit}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <Loader show={isLoading} />
         </div>
     )

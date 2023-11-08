@@ -15,6 +15,8 @@ import TestDeletionConfirmation, { TestDeletionConfirmationProps } from "../Test
 import NewTestCase from "../NewTestCase/NewTestCase";
 import TestRow from "../../elements/TestRow/TestRow";
 import AppContainer from "../../elements/AppContainer/AppContainer";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 function TestsList() {
     const { taskID } = useParams()
@@ -23,7 +25,7 @@ function TestsList() {
     const [allTests, setAllTests] = useState<AllTests | null>(null)
 
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     const testStr = Translator({ path: 'tests.test' })
     const testsStr = Translator({ path: 'tests.tests' })
@@ -38,11 +40,7 @@ function TestsList() {
         }
         fetch()
             .catch(error => {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message)
-                } else {
-                    alert(error) // fallback
-                }
+                handleError(error, setAppError)
             })
     }, [allTests?.open_tests.length, allTests?.closed_tests.length])
 
@@ -136,7 +134,7 @@ function TestsList() {
             <TestDeletionConfirmation data={deletionProps} />
             <NewTestCase show={showNewTest} onClose={closeNewTest} />
             <Loader show={isLoading} />
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
         </div>
     )
 }

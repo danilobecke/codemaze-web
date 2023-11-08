@@ -9,6 +9,8 @@ import Loader from "../../elements/Loader/Loader";
 import FileUploadRow from "../../elements/FileUploadRow/FileUploadRow";
 import { sendFormData, v1Namespace } from "../../../services/ApiService";
 import { Result } from "../../../models/Result";
+import { handleError } from "../../../services/Helpers";
+import { AppError } from "../../../models/AppError";
 
 
 function SendCode(props: { show: boolean, close: (result?: Result) => void }) {
@@ -20,7 +22,7 @@ function SendCode(props: { show: boolean, close: (result?: Result) => void }) {
     const [fileError, setFileError] = useState(false)
 
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     function onClose(result?: Result) {
         setFile(null)
@@ -39,11 +41,7 @@ function SendCode(props: { show: boolean, close: (result?: Result) => void }) {
                 const result = await sendFormData(v1Namespace('tasks/' + taskID + '/results'), data, Result, setIsLoading)
                 onClose(result)
             } catch (error) {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message)
-                } else {
-                    alert(error) // fallback
-                }
+                handleError(error, setAppError)
             }
         }
 
@@ -61,7 +59,7 @@ function SendCode(props: { show: boolean, close: (result?: Result) => void }) {
                     <Button variant='contained' onClick={submit}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <Loader show={isLoading} />
         </div>
     )

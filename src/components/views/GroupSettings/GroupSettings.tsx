@@ -4,18 +4,19 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack, Switc
 
 import { Group } from "../../../models/Group";
 import Translator from "../../elements/Translator/Translator";
-import { getInputValue } from "../../../services/Helpers";
+import { getInputValue, handleError } from "../../../services/Helpers";
 import { patch, v1Namespace } from "../../../services/ApiService";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import Loader from "../../elements/Loader/Loader";
 import SuccessToast from "../../elements/SuccessToast/SuccessToast";
+import { AppError } from "../../../models/AppError";
 
 function GroupSettings(props: { show: boolean, onClose: (updatedGroup: Group | null) => void, group: Group }) {
     const nameField = 'group_settings.nameField'
     const activeField = 'group_settings.activeField'
     
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
     const [showSuccess, setShowSuccess] = useState(false)
 
     async function submit() {
@@ -31,11 +32,7 @@ function GroupSettings(props: { show: boolean, onClose: (updatedGroup: Group | n
             props.onClose(updated)
             setShowSuccess(true)
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
 
@@ -55,7 +52,7 @@ function GroupSettings(props: { show: boolean, onClose: (updatedGroup: Group | n
                     <Button variant='contained' onClick={submit}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <Loader show={isLoading} />
             <SuccessToast show={showSuccess} close={() => setShowSuccess(false)} />
         </div>

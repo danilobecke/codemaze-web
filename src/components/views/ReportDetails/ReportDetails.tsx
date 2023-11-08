@@ -15,6 +15,8 @@ import OverallReportDetails from "./OverallReportDetails";
 import StudentReportDetails from "./StudentReportDetails";
 import TestReportDetails from "./TestReportDetails";
 import AppContainer from "../../elements/AppContainer/AppContainer";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 enum ReportTab {
     Overall, Students, Tests
@@ -33,7 +35,7 @@ function ReportDetails() {
 
     const [isLoadingReport, setIsLoadingReport] = useState(false)
     const [isLoadingTests, setIsLoadingTests] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     useEffect(() => {
         async function fetch() {
@@ -48,11 +50,7 @@ function ReportDetails() {
         }
         fetch()
             .catch((error) => {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message)
-                } else {
-                    alert(error) // fallback
-                }
+                handleError(error, setAppError)
             })
     }, [taskID])
 
@@ -79,7 +77,7 @@ function ReportDetails() {
                 </Stack>
             </AppContainer>
             <Loader show={isLoadingReport || isLoadingTests} />
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
         </div>
     )
 }

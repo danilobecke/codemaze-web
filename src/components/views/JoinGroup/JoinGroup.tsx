@@ -1,19 +1,20 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 
 import Translator from "../../elements/Translator/Translator";
-import { clearInput, getInputValue } from "../../../services/Helpers";
+import { clearInput, getInputValue, handleError } from "../../../services/Helpers";
 import { useState } from "react";
 import { post, v1Namespace } from "../../../services/ApiService";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import Success from "../../../models/Success";
 import SuccessToast from "../../elements/SuccessToast/SuccessToast";
 import Loader from "../../elements/Loader/Loader";
+import { AppError } from "../../../models/AppError";
 
 function JoinGroup(props: { show: boolean, close: () => void }) {
     const fieldName = 'joinGroup-Name'
 
     const [fieldError, setFieldError] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
     const [snackbarOpen, setSnackbarOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
 
@@ -34,11 +35,7 @@ function JoinGroup(props: { show: boolean, close: () => void }) {
             onClose()
             setSnackbarOpen(true)
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
     return (
@@ -53,7 +50,7 @@ function JoinGroup(props: { show: boolean, close: () => void }) {
                     <Button variant='contained' onClick={joinGroup}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <SuccessToast show={snackbarOpen} close={() => setSnackbarOpen(false)} />
             <Loader show={isLoading} />
         </div>

@@ -1,6 +1,7 @@
 import { AnyTypeValidation, maybe } from "@altostra/type-validations"
 
 import { getFileURL } from "./ApiService"
+import { AppError } from "../models/AppError"
 
 export function clearInput(name: string) {
     const field = document.getElementsByName(name)[0] as HTMLInputElement
@@ -52,4 +53,14 @@ export function addOn<T>(setFunction: (value: T[]) => void, current: T[], value:
 
 export function removeFrom<T>(setFunction: (value: T[]) => void, current: T[], index: number) {
     setFunction(current.slice(0, index).concat(current.slice(index + 1)))
+}
+
+export function handleError(error: unknown, setAppError: (appError: AppError) => void) {
+    if (error instanceof AppError) {
+        setAppError(error)
+    } else if (error instanceof Error) {
+        setAppError(new AppError('', error.message))
+    } else {
+        alert(error) // fallback
+    }
 }

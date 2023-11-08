@@ -3,18 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 
 import Translator from "../../elements/Translator/Translator";
-import { clearInput, getInputValue } from "../../../services/Helpers";
+import { clearInput, getInputValue, handleError } from "../../../services/Helpers";
 import { useState } from "react";
 import { post, v1Namespace } from "../../../services/ApiService";
 import { Group } from "../../../models/Group";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import Loader from "../../elements/Loader/Loader";
+import { AppError } from "../../../models/AppError";
 
 function NewGroup(props: { show: boolean, close: () => void }) {
     const fieldName = 'newGroup-Name'
 
     const [fieldError, setFieldError] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
     const [isLoading, setIsLoading] = useState(false)
 
     const navigate = useNavigate()
@@ -36,11 +37,7 @@ function NewGroup(props: { show: boolean, close: () => void }) {
             onClose()
             navigate('/groups/' + group.id)
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
     return (
@@ -55,7 +52,7 @@ function NewGroup(props: { show: boolean, close: () => void }) {
                     <Button variant='contained' onClick={createGroup}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <Loader show={isLoading} />
         </div>
 

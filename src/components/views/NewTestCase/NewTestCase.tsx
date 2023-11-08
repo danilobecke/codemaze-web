@@ -11,6 +11,8 @@ import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import { sendFormData, v1Namespace } from "../../../services/ApiService";
 import Loader from "../../elements/Loader/Loader";
 import SuccessToast from "../../elements/SuccessToast/SuccessToast";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) => void }) {
     const { taskID } = useParams()
@@ -26,7 +28,7 @@ function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) =
     const inputStr = Translator({ path: 'new_test.input' })
     const outputStr = Translator({ path: 'new_test.output' })
 
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [showSuccess, setShowSuccess] = useState(false)
 
@@ -59,11 +61,7 @@ function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) =
             close(test)
             setShowSuccess(true)
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
 
@@ -85,7 +83,7 @@ function NewTestCase(props: { show: boolean, onClose: (newTestCase?: TestCase) =
                     <Button variant='contained' onClick={submit}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <Loader show={isLoading} />
             <SuccessToast show={showSuccess} close={() => setShowSuccess(false)} />
         </div>

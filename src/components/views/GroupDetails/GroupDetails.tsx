@@ -15,6 +15,8 @@ import { JoinRequest } from "../../../models/JoinRequest";
 import Row from "../../elements/Row/Row";
 import GroupSettings from "../GroupSettings/GroupSettings";
 import AppContainer from "../../elements/AppContainer/AppContainer";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 function GroupDetails() {
     const { groupID } = useParams()
@@ -22,7 +24,7 @@ function GroupDetails() {
     const navigate = useNavigate()
 
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     const [group, setGroup] = useState<Group>(new Group())
     const [requestsCount, setRequestsCount] = useState(0)
@@ -48,11 +50,7 @@ function GroupDetails() {
         }
         fetch()
             .catch((error) => {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message)
-                } else {
-                    alert(error) // fallback
-                }
+                handleError(error, setAppError)
             })
     }, [group?.active, group?.name])
 
@@ -100,7 +98,7 @@ function GroupDetails() {
                     </Stack>
                 }
             </AppContainer>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <Loader show={isLoading} />
             <GroupSettings show={settingsOpen} onClose={closeSettings} group={group} />
         </div>

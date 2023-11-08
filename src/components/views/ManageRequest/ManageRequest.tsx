@@ -10,11 +10,13 @@ import Loader from "../../elements/Loader/Loader";
 import { patch, v1Namespace } from "../../../services/ApiService";
 import Success from "../../../models/Success";
 import SuccessToast from "../../elements/SuccessToast/SuccessToast";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 function ManageRequest(props: { show: boolean, onClose: (success: boolean) => void, request: JoinRequest}) {
     const { groupID } = useParams()
 
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
     const [isLoading, setIsLoading] = useState(false)
     const [showSuccess, setShowSuccess] = useState(false)
 
@@ -30,11 +32,7 @@ function ManageRequest(props: { show: boolean, onClose: (success: boolean) => vo
             props.onClose(true)
             setShowSuccess(true)
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
 
@@ -55,7 +53,7 @@ function ManageRequest(props: { show: boolean, onClose: (success: boolean) => vo
                     <Button variant='contained' onClick={submit}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <Loader show={isLoading} />
             <SuccessToast show={showSuccess} close={() => setShowSuccess(false)}></SuccessToast>
         </div>

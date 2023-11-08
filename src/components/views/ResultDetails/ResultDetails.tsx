@@ -10,10 +10,11 @@ import { get, v1Namespace } from "../../../services/ApiService";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import PercentagePieChart from "../../elements/PercentagePieChart/PercentagePieChart";
-import { downloadFile } from "../../../services/Helpers";
+import { downloadFile, handleError } from "../../../services/Helpers";
 import ResultCard from "../../elements/ResultCard/ResultCard";
 import LinkItem from "../../elements/LinkItem/LinkItem";
 import AppContainer from "../../elements/AppContainer/AppContainer";
+import { AppError } from "../../../models/AppError";
 
 function ResultDetails() {
     const navigate = useNavigate()
@@ -26,7 +27,7 @@ function ResultDetails() {
     const [result, setResult] = useState<Result | null>(null)
 
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     useEffect(() => {
         async function fetch() {
@@ -35,11 +36,7 @@ function ResultDetails() {
         }
         fetch()
             .catch((error) => {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message)
-                } else {
-                    alert(error) // fallback
-                }
+                handleError(error, setAppError)
             })
     }, [result?.attempt_number])
 
@@ -92,7 +89,7 @@ function ResultDetails() {
                 </AppContainer>
             }
             <Loader show={isLoading} />
-            <ErrorToast message={errorMessage} setError={setErrorMessage} onClose={dismiss} />
+            <ErrorToast appError={appError} setAppError={setAppError} onClose={dismiss} />
         </div>
     )
 }

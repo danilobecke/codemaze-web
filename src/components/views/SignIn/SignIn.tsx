@@ -6,11 +6,12 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } 
 import { User } from '../../../models/User';
 import { v1Namespace, post } from '../../../services/ApiService';
 import PasswordButton from '../../elements/PasswordButton/PasswordButton';
-import { getInputValue, clearInput } from '../../../services/Helpers';
+import { getInputValue, clearInput, handleError } from '../../../services/Helpers';
 import ErrorToast from '../../elements/ErrorToast/ErrorToast';
 import Session from '../../../services/Session';
 import Translator from '../../elements/Translator/Translator';
 import Loader from '../../elements/Loader/Loader';
+import { AppError } from '../../../models/AppError';
 
 function SignIn(props: { show: boolean, close: () => void }) {
     const emailName = 'email_signin'
@@ -18,7 +19,7 @@ function SignIn(props: { show: boolean, close: () => void }) {
 
     const [emailError, setEmailError] = useState(false)
     const [passwordError, setPasswordError] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
     const [isLoading, setIsLoading] = useState(false)
 
     const navigate = useNavigate()
@@ -47,11 +48,7 @@ function SignIn(props: { show: boolean, close: () => void }) {
             onClose()
             navigate('/groups')
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
 
@@ -68,7 +65,7 @@ function SignIn(props: { show: boolean, close: () => void }) {
                     <Button variant='contained' onClick={submit}><Translator path='buttons.send' /></Button>
                 </DialogActions>
             </Dialog>
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <Loader show={isLoading} />
         </div>
     )

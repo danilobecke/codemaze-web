@@ -12,6 +12,8 @@ import { getArray, v1Namespace } from "../../../services/ApiService";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import AppContainer from "../../elements/AppContainer/AppContainer";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 function TasksList() {
     const user = Session.getCurrentUser()
@@ -23,7 +25,7 @@ function TasksList() {
     const [closedTasks, setClosedTasks] = useState<TaskSummary[]>([])
 
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     useEffect(() => {
         async function fetch() {
@@ -47,11 +49,7 @@ function TasksList() {
         }
         fetch()
             .catch((error) => {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message)
-                } else {
-                    alert(error) // fallback
-                }
+                handleError(error, setAppError)
             })
     }, [openTasks.length, closedTasks.length, upcomingTasks.length])
 
@@ -117,7 +115,7 @@ function TasksList() {
                 </Stack>
             </AppContainer>
             <Loader show={isLoading} />
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
         </div>
     )
 }

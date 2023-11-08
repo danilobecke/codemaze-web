@@ -1,3 +1,4 @@
+import { AppError } from "../models/AppError";
 import { Config } from "../models/Config";
 import { getArray, v1Namespace } from "./ApiService";
 
@@ -52,7 +53,7 @@ var ConfigService = (function () {
     function parse(configJSON: any): Config {
         const config = new Config()
         if (!config.isValid(configJSON)) {
-            throw Error('Invalid JSON.')
+            throw new AppError('', 'Invalid Config JSON.')
         }
         return Object.assign(config, configJSON)
     }

@@ -10,10 +10,11 @@ import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import { TaskSummary } from "../../../models/TaskSummary";
 import TestCard from "../../elements/TestCard/TestCard";
-import { MultipleInput, addOn, removeFrom, setOn, zip3 } from "../../../services/Helpers";
+import { MultipleInput, addOn, handleError, removeFrom, setOn, zip3 } from "../../../services/Helpers";
 import TestCase from "../../../models/TestCase";
 import AddTaskFields, { AddTaskHandler } from "../../elements/AddTaskFields/AddTaskFields";
 import AppContainer from "../../elements/AppContainer/AppContainer";
+import { AppError } from "../../../models/AppError";
 
 function NewTask() {
     const navigate = useNavigate()
@@ -28,7 +29,7 @@ function NewTask() {
     const [testKindErrors, setTestKindErrors] = useState<boolean[]>([false])
 
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
     const [dismissOnError, setDismissOnError] = useState(false)
 
     function toTestCard(values: [File | undefined, File | undefined, boolean | undefined], index: number) {
@@ -78,22 +79,14 @@ function NewTask() {
                 try {
                     await sendTest(i, taskID)
                 } catch (error) {
-                    if (error instanceof Error) {
-                        setDismissOnError(true)
-                        setErrorMessage(error.message)
-                    } else {
-                        alert(error) // fallback
-                    }
+                    setDismissOnError(true)
+                    handleError(error, setAppError)
                     return
                 }
             }
             dismiss()
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
 
@@ -148,7 +141,7 @@ function NewTask() {
                 </Stack>
             </AppContainer>
             <Loader show={isLoading} />
-            <ErrorToast message={errorMessage} setError={setErrorMessage} onClose={dismissOnError ? dismiss : undefined} />
+            <ErrorToast appError={appError} setAppError={setAppError} onClose={dismissOnError ? dismiss : undefined} />
         </div>
     )
 }

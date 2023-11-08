@@ -15,13 +15,15 @@ import JoinGroup from "../JoinGroup/JoinGroup";
 import Loader from "../../elements/Loader/Loader";
 import Row from "../../elements/Row/Row";
 import AppContainer from "../../elements/AppContainer/AppContainer";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 function Groups() {
     const user = Session.getCurrentUser()
 
     const [activeGroups, setActiveGroups] = useState<Group[]>([])
     const [inactiveGroups, setInactiveGroups] = useState<Group[]>([])
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
 
     const [showNewGroup, setShowNewGroup] = useState(false)
     const [showJoinGroup, setShowJoinGroup] = useState(false)
@@ -41,11 +43,7 @@ function Groups() {
         }
         fetch()
             .catch((error) => {
-                if (error instanceof Error) {
-                    setErrorMessage(error.message)
-                } else {
-                    alert(error) // fallback
-                }
+                handleError(error, setAppError)
             })
     }, [])
 
@@ -95,7 +93,7 @@ function Groups() {
                         }
                         {activeGroups.length === 0 && inactiveGroups.length === 0 ? <Typography variant="h5"><Translator path="groups.empty" /></Typography> : null}
                     </Stack>
-                    <ErrorToast message={errorMessage} setError={setErrorMessage} />
+                    <ErrorToast appError={appError} setAppError={setAppError} />
                 </AppContainer>
                 <NewGroup show={showNewGroup} close={() => setShowNewGroup(false)} />
                 <JoinGroup show={showJoinGroup} close={() => setShowJoinGroup(false)} />

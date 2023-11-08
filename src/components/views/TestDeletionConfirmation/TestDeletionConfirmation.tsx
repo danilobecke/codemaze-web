@@ -9,6 +9,8 @@ import Success from "../../../models/Success";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import SuccessToast from "../../elements/SuccessToast/SuccessToast";
+import { AppError } from "../../../models/AppError";
+import { handleError } from "../../../services/Helpers";
 
 export interface TestDeletionConfirmationProps {
     test: TestCase
@@ -18,7 +20,7 @@ export interface TestDeletionConfirmationProps {
 
 function TestDeletionConfirmation(props: { data: TestDeletionConfirmationProps | null }) {
     const [isLoading, setIsLoading] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [appError, setAppError] = useState<AppError | null>(null)
     const [showSuccess, setShowSuccess] = useState(false)
 
     async function submit() {
@@ -31,11 +33,7 @@ function TestDeletionConfirmation(props: { data: TestDeletionConfirmationProps |
             data.onClose(data.test)
             setShowSuccess(true)
         } catch (error) {
-            if (error instanceof Error) {
-                setErrorMessage(error.message)
-            } else {
-                alert(error) // fallback
-            }
+            handleError(error, setAppError)
         }
     }
 
@@ -49,7 +47,7 @@ function TestDeletionConfirmation(props: { data: TestDeletionConfirmationProps |
                 </DialogActions>
             </Dialog>
             <Loader show={isLoading} />
-            <ErrorToast message={errorMessage} setError={setErrorMessage} />
+            <ErrorToast appError={appError} setAppError={setAppError} />
             <SuccessToast show={showSuccess} close={() => setShowSuccess(false)} />
         </div>
     )
