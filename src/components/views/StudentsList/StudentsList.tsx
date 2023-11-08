@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Container, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 import { CheckBox, DisabledByDefaultRounded } from "@mui/icons-material";
 
 import Session from "../../../services/Session";
@@ -13,6 +13,7 @@ import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import Translator from "../../elements/Translator/Translator";
 import ManageRequest from "../ManageRequest/ManageRequest";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 function StudentsList() {
     const { groupID } = useParams()
@@ -92,7 +93,7 @@ function StudentsList() {
     return (
         <div>
             <NavigationBar />
-            <Container>
+            <AppContainer>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path="students_list.title" /></Typography>
                     {requests.length < 1 ? null :
@@ -115,7 +116,7 @@ function StudentsList() {
                         <Typography variant="h5"><Translator path="students_list.empty" /></Typography>
                     }
                 </Stack>
-            </Container>
+            </AppContainer>
             <ManageRequest show={showManageRequest} onClose={manageRequestOnClose} request={selectedJoinRequest}/>
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />

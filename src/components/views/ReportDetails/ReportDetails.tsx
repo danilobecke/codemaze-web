@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Container, Stack, Tab, Tabs, Typography } from "@mui/material";
+import { Stack, Tab, Tabs, Typography } from "@mui/material";
 import { Assignment, Group, Public } from "@mui/icons-material";
 
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
@@ -14,6 +14,7 @@ import Translator from "../../elements/Translator/Translator";
 import OverallReportDetails from "./OverallReportDetails";
 import StudentReportDetails from "./StudentReportDetails";
 import TestReportDetails from "./TestReportDetails";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 enum ReportTab {
     Overall, Students, Tests
@@ -62,7 +63,7 @@ function ReportDetails() {
     return (
         <div>
             <NavigationBar />
-            <Container>
+            <AppContainer>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path="report_details.title" /></Typography>
                     {(!report || !tests) ? null :
@@ -76,7 +77,7 @@ function ReportDetails() {
                     <StudentReportDetails visible={selectedTab === ReportTab.Students} report={report?.students} tests={tests} setIsLoading={setIsLoadingTests}/>
                     <TestReportDetails visible={selectedTab === ReportTab.Tests} report={report?.tests} tests={tests} setIsLoading={setIsLoadingTests} />
                 </Stack>
-            </Container>
+            </AppContainer>
             <Loader show={isLoadingReport || isLoadingTests} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
         </div>

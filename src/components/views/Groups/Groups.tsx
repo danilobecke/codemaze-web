@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Button, Container, List, Stack, Typography } from "@mui/material";
+import { Button, List, Stack, Typography } from "@mui/material";
 
 import Translator from "../../elements/Translator/Translator";
 import { Group } from "../../../models/Group";
@@ -14,6 +14,7 @@ import NewGroup from "../NewGroup/NewGroup";
 import JoinGroup from "../JoinGroup/JoinGroup";
 import Loader from "../../elements/Loader/Loader";
 import Row from "../../elements/Row/Row";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 function Groups() {
     const user = Session.getCurrentUser()
@@ -73,7 +74,7 @@ function Groups() {
                 <NavigationBar>
                     <Button variant="contained" size="large" onClick={() => buttonAction(user.role)}>{user.role === 'manager' ? <Translator path="groups.new" /> : <Translator path="groups.join" />}</Button>
                 </NavigationBar>
-                <Container>
+                <AppContainer>
                     <Stack direction='column' spacing={4}>
                         <Typography variant="h1"><Translator path="groups.title" /></Typography>
                         {activeGroups.length === 0 ? null :
@@ -95,7 +96,7 @@ function Groups() {
                         {activeGroups.length === 0 && inactiveGroups.length === 0 ? <Typography variant="h5"><Translator path="groups.empty" /></Typography> : null}
                     </Stack>
                     <ErrorToast message={errorMessage} setError={setErrorMessage} />
-                </Container>
+                </AppContainer>
                 <NewGroup show={showNewGroup} close={() => setShowNewGroup(false)} />
                 <JoinGroup show={showJoinGroup} close={() => setShowJoinGroup(false)} />
                 <Loader show={isLoading} />

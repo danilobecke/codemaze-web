@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Container, IconButton, List, Stack, Typography } from "@mui/material";
+import { Button, IconButton, List, Stack, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
@@ -16,6 +16,7 @@ import { downloadFile } from "../../../services/Helpers";
 import TaskSettings from "../TaskSettings/TaskSettings";
 import SendCode from "../SendCode/SendCode";
 import { Result } from "../../../models/Result";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 function TaskDetails() {
     const user = Session.getCurrentUser()
@@ -98,7 +99,7 @@ function TaskDetails() {
                     <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>
                 }
             </NavigationBar>
-            <Container>
+            <AppContainer>
                 <Stack direction='column' spacing={4}>
                     {!task ? null :
                         <div>
@@ -121,7 +122,7 @@ function TaskDetails() {
                         {!user || user.role === 'student' ? null : <Row key='report' text={Translator({ path: 'task.report' })} onClick={showReport} />}
                     </List>
                 </Stack>
-            </Container>
+            </AppContainer>
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
             <TaskSettings task={task} show={isSettingsOpen} onClose={closeSettings} />

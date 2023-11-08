@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Container, IconButton, List, Stack, Typography } from "@mui/material";
+import { IconButton, List, Stack, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
@@ -14,6 +14,7 @@ import Translator from "../../elements/Translator/Translator";
 import { JoinRequest } from "../../../models/JoinRequest";
 import Row from "../../elements/Row/Row";
 import GroupSettings from "../GroupSettings/GroupSettings";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 function GroupDetails() {
     const { groupID } = useParams()
@@ -82,7 +83,7 @@ function GroupDetails() {
             <NavigationBar>
                 {!user || user.role === 'student' ? <></> : <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>}
             </NavigationBar>
-            <Container>
+            <AppContainer>
                 {!group || !user ? null :
                     <Stack direction='column' spacing={4}>
                         <div>
@@ -98,7 +99,7 @@ function GroupDetails() {
                         </List>
                     </Stack>
                 }
-            </Container>
+            </AppContainer>
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
             <Loader show={isLoading} />
             <GroupSettings show={settingsOpen} onClose={closeSettings} group={group} />

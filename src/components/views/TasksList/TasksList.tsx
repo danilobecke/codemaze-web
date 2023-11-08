@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Container, List, Stack, Typography } from "@mui/material";
+import { Button, List, Stack, Typography } from "@mui/material";
 
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Session from "../../../services/Session";
@@ -11,6 +11,7 @@ import Row from "../../elements/Row/Row";
 import { getArray, v1Namespace } from "../../../services/ApiService";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 function TasksList() {
     const user = Session.getCurrentUser()
@@ -85,7 +86,7 @@ function TasksList() {
                     <Button variant="contained" size="large" onClick={newTask}><Translator path='tasks.newTask' /></Button>
                 }
             </NavigationBar>
-            <Container>
+            <AppContainer>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path='tasks.title' /></Typography>
                     {upcomingTasks.length < 1 ? null :
@@ -114,7 +115,7 @@ function TasksList() {
                     }
                     {openTasks.length > 0 || closedTasks.length > 0 || upcomingTasks.length > 0 ? null : <Typography variant="h5"><Translator path="tasks.empty" /></Typography>}
                 </Stack>
-            </Container>
+            </AppContainer>
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} />
         </div>

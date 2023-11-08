@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Container, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Translator from "../../elements/Translator/Translator";
@@ -13,6 +13,7 @@ import TestCard from "../../elements/TestCard/TestCard";
 import { MultipleInput, addOn, removeFrom, setOn, zip3 } from "../../../services/Helpers";
 import TestCase from "../../../models/TestCase";
 import AddTaskFields, { AddTaskHandler } from "../../elements/AddTaskFields/AddTaskFields";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 function NewTask() {
     const navigate = useNavigate()
@@ -127,7 +128,7 @@ function NewTask() {
     return (
         <div>
             <NavigationBar />
-            <Container>
+            <AppContainer>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path='new_task.title' /></Typography>
                     <Stack direction='row' spacing={6}>
@@ -145,7 +146,7 @@ function NewTask() {
                         <Button variant="text" size="large" onClick={dismiss}><Translator path="buttons.cancel" /></Button>
                     </Stack>
                 </Stack>
-            </Container>
+            </AppContainer>
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} onClose={dismissOnError ? dismiss : undefined} />
         </div>

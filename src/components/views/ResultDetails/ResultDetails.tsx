@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Container, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import { Result, TestCaseResult } from "../../../models/Result";
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
@@ -13,6 +13,7 @@ import PercentagePieChart from "../../elements/PercentagePieChart/PercentagePieC
 import { downloadFile } from "../../../services/Helpers";
 import ResultCard from "../../elements/ResultCard/ResultCard";
 import LinkItem from "../../elements/LinkItem/LinkItem";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 function ResultDetails() {
     const navigate = useNavigate()
@@ -73,7 +74,7 @@ function ResultDetails() {
         <div>
             <NavigationBar />
             {!result ? null :
-                <Container>
+                <AppContainer>
                     <Stack direction='column' spacing={4}>
                         <div>
                             <Stack direction='row' alignItems='center'>
@@ -88,7 +89,7 @@ function ResultDetails() {
                             resultSection(closedResultsStr, result.closed_result_percentage, result.closed_results)
                         }
                     </Stack>
-                </Container>
+                </AppContainer>
             }
             <Loader show={isLoading} />
             <ErrorToast message={errorMessage} setError={setErrorMessage} onClose={dismiss} />

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button, Container, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { Button, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 
 import Session from "../../../services/Session";
 import NavigationBar from "../../elements/NavigationBar/NavigationBar";
@@ -14,6 +14,7 @@ import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import TestDeletionConfirmation, { TestDeletionConfirmationProps } from "../TestDeletionConfirmation/TestDeletionConfirmation";
 import NewTestCase from "../NewTestCase/NewTestCase";
 import TestRow from "../../elements/TestRow/TestRow";
+import AppContainer from "../../elements/AppContainer/AppContainer";
 
 function TestsList() {
     const { taskID } = useParams()
@@ -102,7 +103,7 @@ function TestsList() {
             <NavigationBar>
                 {!user || user.role === 'student' ? <></> : <Button variant="contained" onClick={newTest}><Translator path="tests.newTest" /></Button>}
             </NavigationBar>
-            <Container>
+            <AppContainer>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path="tests.title" /></Typography>
                     {
@@ -131,7 +132,7 @@ function TestsList() {
                         !allTests || (allTests.open_tests.length === 0 && allTests.closed_tests.length === 0) ? <Typography variant="h5"><Translator path="tests.empty" /></Typography> : null
                     }
                 </Stack>
-            </Container>
+            </AppContainer>
             <TestDeletionConfirmation data={deletionProps} />
             <NewTestCase show={showNewTest} onClose={closeNewTest} />
             <Loader show={isLoading} />
