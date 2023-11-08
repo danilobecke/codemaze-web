@@ -16,8 +16,8 @@ function TestCard(props: { index: number, inputError: boolean, outputError: bool
                     <Typography variant="h5"><Translator path="new_test.cardTitle" arguments={{ position: props.index + 1 }} /></Typography>
                     {props.onDelete ? <IconButton onClick={() => props.onDelete!(props.index)}><RemoveCircleOutlineRounded color="error" /></IconButton> : null}
                 </Stack>
-                <FileUploadRow title={inputStr} hasError={props.inputError} file={props.inputFile} setFile={file => props.setInputFile(props.index, file)} />
-                <FileUploadRow title={outputStr} hasError={props.outputError} file={props.outputFile} setFile={file => props.setOutputFile(props.index, file)} />
+                <FileUploadRow required title={inputStr} hasError={props.inputError} file={props.inputFile} setFile={file => props.setInputFile(props.index, file)} />
+                <FileUploadRow required title={outputStr} hasError={props.outputError} file={props.outputFile} setFile={file => props.setOutputFile(props.index, file)} />
                 <TestVisibilitySelectRow hasError={props.kindError} closed={props.closed} setClosed={closed => props.setClosed(props.index, closed)} />
             </CardContent>
         </Card >
