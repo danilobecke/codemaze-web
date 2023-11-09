@@ -20,6 +20,7 @@ import TestsList from "./components/views/TestsList/TestsList";
 import NewTask from "./components/views/NewTask/NewTask";
 import ResultDetails from "./components/views/ResultDetails/ResultDetails";
 import ReportDetails from "./components/views/ReportDetails/ReportDetails";
+import ConfigDetails from "./components/views/ConfigDetails/ConfigDetails";
 import NotFound from "./components/views/NotFound/NotFound";
 
 import './App.css';
@@ -39,6 +40,7 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" element={<Landing />} />
+              <Route path="/configs" element={<ConfigDetails />} />
               <Route path="/groups" element={
                 <ProtectedRoute>
                   <Groups />

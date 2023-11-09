@@ -190,5 +190,14 @@ export default {
             open: 'Open Tests',
             closed: 'Closed Tests',
         },
+        configs: {
+            title: 'System Info',
+            aboutTitle: 'About',
+            aboutInfo: 'Codemaze, envisioned as a final course project by Danilo Cleber Becke, is a comprehensive programming education platform specifically designed to enhance the learning experience in higher education. Through a dedicated virtual environment for code execution, Codemaze empowers users, enabling instructors to add customized exercises for students to solve, while students have the ability to submit their code for evaluation. Alongside its comprehensive features, including differentiated registration for teachers and students, class management, and customizable exercises, the platform provides immediate feedback and detailed reports. Its straightforward instructions ensure a stable and secure deployment.',
+            languages: 'Accepted Programming Languages',
+            name: 'Name',
+            extensions: 'File extensions',
+            help: 'Help',
+        },
     }
 }

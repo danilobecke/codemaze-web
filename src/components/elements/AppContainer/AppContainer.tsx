@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { Container, Stack, Typography } from "@mui/material";
 
 import LinkItem from "../LinkItem/LinkItem";
@@ -5,7 +7,12 @@ import NavigationBar from "../NavigationBar/NavigationBar";
 import Translator from "../Translator/Translator";
 
 function AppContainer(props: { navigationBarChildren?: JSX.Element | JSX.Element[], children?: JSX.Element | JSX.Element[] | null, flex?: boolean }) {
-    const infoStr = Translator({path: 'footer.info'})
+    const navigate = useNavigate()
+    const infoStr = Translator({ path: 'footer.info' })
+
+    function showConfigs() {
+        navigate('/configs')
+    }
 
     return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -26,7 +33,7 @@ function AppContainer(props: { navigationBarChildren?: JSX.Element | JSX.Element
                         <Typography variant="caption">by Danilo Cleber Becke</Typography>
                     </Stack>
                     <Typography variant="caption">|</Typography>
-                    <LinkItem title={infoStr} variant="caption" />
+                    <LinkItem title={infoStr} variant="caption" onClick={showConfigs} />
                 </Stack>
             </footer>
         </div>

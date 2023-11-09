@@ -190,5 +190,14 @@ export default {
             open: 'Testes Abertos',
             closed: 'Testes Fechados',
         },
+        configs: {
+            title: 'Informações do Sistema',
+            aboutTitle: 'Sobre',
+            aboutInfo: 'O Codemaze, concebido como trabalho de conclusão de curso (TCC) por Danilo Cleber Becke, é uma plataforma completa de educação em programação, especialmente projetada para aprimorar a experiência de aprendizado no ensino superior. Por meio de um ambiente virtual dedicado à execução de códigos, o Codemaze capacita os usuários, permitindo que os professores adicionem exercícios personalizados para os alunos resolverem, enquanto estes últimos têm a capacidade de submeter seus códigos para avaliação. Além de suas funcionalidades abrangentes, como diferenciação no cadastro para professores e alunos, gestão de turmas e a disponibilidade de exercícios customizáveis, a plataforma proporciona feedback imediato e relatórios detalhados. A sua simplicidade de instruções assegura uma implantação estável e segura.',
+            languages: 'Linguagens de Programação Aceitas',
+            name: 'Nome',
+            extensions: 'Extensões de arquivo',
+            help: 'Ajuda',
+        },
     }
 }
