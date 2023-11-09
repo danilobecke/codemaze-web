@@ -1,5 +1,6 @@
-deploy:
+build:
 	docker build -t codemaze-web -f Dockerfile.deploy .
+deploy:
 	docker run\
 		--name codemaze-web\
 		-d\
@@ -9,8 +10,9 @@ deploy:
 stop-deploy:
 	docker stop codemaze-web
 	docker rm codemaze-web
-debug:
+build-debug:
 	docker build -t codemaze-web-debug -f Dockerfile.debug .
+debug:
 	docker run\
 		--name codemaze-web-debug\
 		--restart unless-stopped\
