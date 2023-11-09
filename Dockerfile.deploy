@@ -1,0 +1,7 @@
+FROM node:slim
+COPY ./ /codemaze-web/
+WORKDIR /codemaze-web/
+RUN npm install
+RUN npm run build
+RUN npm install -g serve
+CMD serve -s build
