@@ -88,6 +88,7 @@ Developed using [React](https://react.dev) with [TypeScript](https://www.typescr
 
 - [@altostra/type-validations](https://www.npmjs.com/package/@altostra/type-validations)
 - [dayjs](https://www.npmjs.com/package/dayjs)
+- [Docker](https://www.docker.com)
 - [i18next](https://www.npmjs.com/package/i18next)
 - [i18next-browser-languagedetector](https://www.npmjs.com/package/i18next-browser-languagedetector)
 - [@mui/icons-material](https://www.npmjs.com/package/@mui/icons-material)
@@ -96,6 +97,7 @@ Developed using [React](https://react.dev) with [TypeScript](https://www.typescr
 - [@mui/x-date-pickers](https://www.npmjs.com/package/@mui/x-date-pickers)
 - [react-i18next](https://react.i18next.com)
 - [react-router-dom](https://www.npmjs.com/package/react-router-dom)
+- [serve](https://www.npmjs.com/package/serve)
 
 <a name=contact></a>
 ## Contact Info
