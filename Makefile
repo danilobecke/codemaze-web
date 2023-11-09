@@ -17,7 +17,7 @@ debug:
 		--name codemaze-web-debug\
 		--restart unless-stopped\
 		-p 3000:3000\
-		-v ./:/codemaze-web\
+		-v ./src:/codemaze-web/src\
 		codemaze-web-debug
 stop-debug:
 	docker stop codemaze-web-debug
