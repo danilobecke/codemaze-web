@@ -7,7 +7,6 @@ import Translator from "../../elements/Translator/Translator";
 import { Group } from "../../../models/Group";
 import { getArray, v1Namespace } from "../../../services/ApiService";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Session from "../../../services/Session";
 import { Role } from "../../../models/Role";
 import NewGroup from "../NewGroup/NewGroup";
@@ -69,10 +68,9 @@ function Groups() {
     return (
         !user ? null :
             <div>
-                <NavigationBar>
+                <AppContainer navigationBarChildren={
                     <Button variant="contained" size="large" onClick={() => buttonAction(user.role)}>{user.role === 'manager' ? <Translator path="groups.new" /> : <Translator path="groups.join" />}</Button>
-                </NavigationBar>
-                <AppContainer>
+                }>
                     <Stack direction='column' spacing={4}>
                         <Typography variant="h1"><Translator path="groups.title" /></Typography>
                         {activeGroups.length === 0 ? null :

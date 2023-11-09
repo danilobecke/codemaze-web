@@ -8,7 +8,6 @@ import Session from "../../../services/Session";
 import { getArray, v1Namespace } from "../../../services/ApiService";
 import { PublicUser } from "../../../models/PublicUser";
 import { JoinRequest } from "../../../models/JoinRequest";
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import Translator from "../../elements/Translator/Translator";
@@ -90,7 +89,6 @@ function StudentsList() {
 
     return (
         <div>
-            <NavigationBar />
             <AppContainer>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path="students_list.title" /></Typography>

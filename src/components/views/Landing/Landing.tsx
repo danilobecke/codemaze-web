@@ -7,9 +7,8 @@ import Session from '../../../services/Session';
 import SignIn from '../SignIn/SignIn';
 import SignUp from '../SignUp/SignUp';
 import Translator from '../../elements/Translator/Translator';
-import NavigationBar from '../../elements/NavigationBar/NavigationBar';
 
-import './Landing.css'
+import AppContainer from '../../elements/AppContainer/AppContainer';
 
 function Landing() {
     const navigate = useNavigate()
@@ -17,12 +16,12 @@ function Landing() {
 
     // Sign In
     const [showSignIn, setShowSignIn] = useState(false)
-    function openSignIn() { 
+    function openSignIn() {
         if (Session.getCurrentUser()) {
             navigate('/groups')
             return
         }
-        setShowSignIn(true) 
+        setShowSignIn(true)
     }
     function closeSignIn() { setShowSignIn(false) }
     // Sign Up
@@ -32,14 +31,18 @@ function Landing() {
 
     return (
         <div>
-            <NavigationBar>
-                    <Button onClick={openSignUp} variant='outlined' size='large' color='inherit'><Translator path='landing.sign_up' /></Button>
-                    <Button onClick={openSignIn} variant='contained' size='large'><Translator path='landing.sign_in' /></Button>
-            </NavigationBar>
-            <div className='Landing-content'>
-                <Typography variant='h1'>Codemaze</Typography>
-                <Typography variant='h4'>{REACT_APP_SCHOOL_NAME ?? "[School Name]"}</Typography>
-            </div>
+            <AppContainer navigationBarChildren={[
+                <Button onClick={openSignUp} variant='outlined' size='large' color='inherit'><Translator path='landing.sign_up' /></Button>,
+                <Button onClick={openSignIn} variant='contained' size='large'><Translator path='landing.sign_in' /></Button>
+            ]
+            } flex>
+                <div style={{ display: 'flex', width: '100%' }}>
+                    <div style={{ height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                        <Typography variant='h1'>Codemaze</Typography>
+                        <Typography variant='h4'>{REACT_APP_SCHOOL_NAME ?? "[School Name]"}</Typography>
+                    </div>
+                </div>
+            </AppContainer>
             <SignIn show={showSignIn} close={closeSignIn} />
             <SignUp show={showSignUp} close={closeSignUp} />
         </div>

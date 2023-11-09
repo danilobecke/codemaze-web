@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { Button, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
 
 import Session from "../../../services/Session";
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Translator from "../../elements/Translator/Translator";
 import TestCase from "../../../models/TestCase";
 import { get, v1Namespace } from "../../../services/ApiService";
@@ -98,10 +97,11 @@ function TestsList() {
 
     return (
         <div>
-            <NavigationBar>
-                {!user || user.role === 'student' ? <></> : <Button variant="contained" onClick={newTest}><Translator path="tests.newTest" /></Button>}
-            </NavigationBar>
-            <AppContainer>
+            <AppContainer navigationBarChildren={
+                <div>
+                    {!user || user.role === 'student' ? <></> : <Button variant="contained" onClick={newTest}><Translator path="tests.newTest" /></Button>}
+                </div>
+            }>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path="tests.title" /></Typography>
                     {

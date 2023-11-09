@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, Stack, Typography } from "@mui/material";
 
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Translator from "../../elements/Translator/Translator";
 import { sendFormData, v1Namespace } from "../../../services/ApiService";
 import Loader from "../../elements/Loader/Loader";
@@ -120,7 +119,6 @@ function NewTask() {
 
     return (
         <div>
-            <NavigationBar />
             <AppContainer>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path='new_task.title' /></Typography>

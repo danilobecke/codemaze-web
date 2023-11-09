@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Stack, Typography } from "@mui/material";
 
 import { Result, TestCaseResult } from "../../../models/Result";
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Translator from "../../elements/Translator/Translator";
 import { get, v1Namespace } from "../../../services/ApiService";
 import Loader from "../../elements/Loader/Loader";
@@ -69,7 +68,6 @@ function ResultDetails() {
 
     return (
         <div>
-            <NavigationBar />
             {!result ? null :
                 <AppContainer>
                     <Stack direction='column' spacing={4}>

@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { Stack, Tab, Tabs, Typography } from "@mui/material";
 import { Assignment, Group, Public } from "@mui/icons-material";
 
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import { get, v1Namespace } from "../../../services/ApiService";
 import { Report } from "../../../models/Report";
 import Loader from "../../elements/Loader/Loader";
@@ -60,7 +59,6 @@ function ReportDetails() {
 
     return (
         <div>
-            <NavigationBar />
             <AppContainer>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path="report_details.title" /></Typography>

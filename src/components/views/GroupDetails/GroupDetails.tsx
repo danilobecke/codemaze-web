@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { IconButton, List, Stack, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Loader from "../../elements/Loader/Loader";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 import { get, getArray, v1Namespace } from "../../../services/ApiService";
@@ -78,10 +77,11 @@ function GroupDetails() {
 
     return (
         <div>
-            <NavigationBar>
-                {!user || user.role === 'student' ? <></> : <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>}
-            </NavigationBar>
-            <AppContainer>
+            <AppContainer navigationBarChildren={
+                <div>
+                    {!user || user.role === 'student' ? <></> : <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>}
+                </div>
+            }>
                 {!group || !user ? null :
                     <Stack direction='column' spacing={4}>
                         <div>

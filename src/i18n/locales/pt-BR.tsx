@@ -1,5 +1,8 @@
 export default {
     translations: {
+        footer: {
+            info: 'Informações do Sistema',
+        },
         landing: {
             sign_in: 'Entrar',
             sign_up: 'Nova Conta'

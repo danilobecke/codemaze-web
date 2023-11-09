@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button, IconButton, List, Stack, Typography } from "@mui/material";
 import { Settings } from "@mui/icons-material";
 
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Session from "../../../services/Session";
 import Translator from "../../elements/Translator/Translator";
 import Task from "../../../models/Task";
@@ -89,14 +88,15 @@ function TaskDetails() {
 
     return (
         <div>
-            <NavigationBar>
-                {!user || user.role === 'student' ?
-                    task?.isClosed() === true ? <></> : <Button variant="contained" onClick={showSubmit}><Translator path="task.submit" /></Button>
-                    :
-                    <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>
-                }
-            </NavigationBar>
-            <AppContainer>
+            <AppContainer navigationBarChildren={
+                <div>
+                    {!user || user.role === 'student' ?
+                        task?.isClosed() === true ? <></> : <Button variant="contained" onClick={showSubmit}><Translator path="task.submit" /></Button>
+                        :
+                        <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>
+                    }
+                </div>
+            }>
                 <Stack direction='column' spacing={4}>
                     {!task ? null :
                         <div>

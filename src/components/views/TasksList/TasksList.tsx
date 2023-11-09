@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { Button, List, Stack, Typography } from "@mui/material";
 
-import NavigationBar from "../../elements/NavigationBar/NavigationBar";
 import Session from "../../../services/Session";
 import Translator from "../../elements/Translator/Translator";
 import { TaskSummary } from "../../../models/TaskSummary";
@@ -66,7 +65,7 @@ function TasksList() {
     }
 
     function newTask() {
-        navigate('new', {replace: true})
+        navigate('new', { replace: true })
     }
 
     function toRow(task: TaskSummary) {
@@ -79,12 +78,13 @@ function TasksList() {
 
     return (
         <div>
-            <NavigationBar>
-                {!user || user.role === 'student' ? <></> :
-                    <Button variant="contained" size="large" onClick={newTask}><Translator path='tasks.newTask' /></Button>
-                }
-            </NavigationBar>
-            <AppContainer>
+            <AppContainer navigationBarChildren={
+                <div>
+                    {!user || user.role === 'student' ? <></> :
+                        <Button variant="contained" size="large" onClick={newTask}><Translator path='tasks.newTask' /></Button>
+                    }
+                </div>
+            }>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path='tasks.title' /></Typography>
                     {upcomingTasks.length < 1 ? null :
