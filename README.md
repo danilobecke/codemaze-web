@@ -1,6 +1,6 @@
 # Codemaze-Web (aka frontend)
 
-Codemaze is an advanced platform specifically designed to enhance the programming education experience in higher education. Providing a virtual environment for code execution, Codemaze allows users to practice, test, and evaluate their programs across various programming languages. Furthermore, the software integrates powerful features including plagiarism detection reports, detailed logging capabilities, and Swagger documentation for easy reference. With support for adding programming languages, customizable configurations, and a flexible architecture built on Docker containers, Codemaze empowers both instructors and higher education students to collaboratively and efficiently explore the realm of programming.
+Codemaze is an advanced platform specifically designed to enhance the programming education experience in higher education. Providing a virtual environment for code execution, Codemaze allows users to practice, test, and evaluate their programs across various programming languages. Furthermore, the software integrates powerful features including plagiarism detection reports, detailed logging capabilities, and Swagger documentation for easy reference. With support for adding programming languages, customizable configurations, and flexible architecture built on Docker containers, Codemaze empowers both instructors and higher education students to collaboratively and efficiently explore the realm of programming.
 
 **This is the suggested frontend to run with the [Codemaze](https://github.com/danilobecke/codemaze) backend.**
 
@@ -47,7 +47,7 @@ make build
 make deploy
 ```
 
-By doing this, Codemaze-Web will be running in the `:80` port. You can customize the port updating the [Makefile](./Makefile).
+By doing this, Codemaze-Web will be running in the `:80` port. You can customize the port by updating the [Makefile](./Makefile).
 
 <a name=contr></a>
 ## Contributing
@@ -64,7 +64,7 @@ make build-debug
 make debug
 ```
 
-You must have a `.env` file in the same way as the [.env.deploy](#env-deploy) one.
+You must have a `.env` file in the same way as the [.env (deploy)](#env-deploy) one.
 
 <a name=stop></a>
 ## Stopping
