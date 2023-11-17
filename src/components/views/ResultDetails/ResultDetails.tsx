@@ -80,7 +80,7 @@ function ResultDetails() {
                             <LinkItem onClick={downloadCode} title={downloadCodeStr} />
                         </div>
                         {resultSection(openResultsStr, result.open_result_percentage, result.open_results)}
-                        {!result.closed_result_percentage ? null :
+                        {result.closed_result_percentage === null ? null :
                             resultSection(closedResultsStr, result.closed_result_percentage, result.closed_results)
                         }
                     </Stack>
