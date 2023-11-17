@@ -31,6 +31,25 @@ function DiffBlock(props: { diff: string }) {
     const expextedInfoRegex = new RegExp('^--- .+')
     const resultInfoRegex = new RegExp('^\\+\\+\\+ .+')
 
+    function diffLines(): string[] {
+        const lines = props.diff.split('\n')
+        var result: string[] = []
+        for (var i = 0; i < lines.length; i++) {
+            const line = lines[i]
+            if (line.length > 0) {
+                result.push(line)
+            } else {
+                // line break
+                if (i < 1) {
+                    result[i] = '\\n'
+                } else {
+                    result[i - 1] = result[i - 1] + '\\n'
+                }
+            }
+        }
+        return result
+    }
+
     function getLineKind(line: string): LineKind {
         if (expextedInfoRegex.test(line)) {
             return LineKind.ExpectedInfo
@@ -86,7 +105,7 @@ function DiffBlock(props: { diff: string }) {
     return (
         <div style={{ display: 'flex', justifyItems: 'start' }}>
             <div style={{ display: 'flex', flexDirection: 'column', borderStyle: 'solid', borderWidth: 1, borderColor: 'black' }}>
-                {props.diff.split('\n').map(getLine)}
+                {diffLines().map(getLine)}
             </div>
         </div>
     )
