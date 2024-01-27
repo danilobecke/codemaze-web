@@ -1,14 +1,11 @@
-import { AppError } from "../models/AppError";
 import { Config } from "../models/Config";
-import { getArray, v1Namespace } from "./ApiService";
+import { get, v1Namespace } from "./ApiService";
 
 var ConfigService = (function () {
     const configsKey = 'app_configs'
-    const jsonKey = 'configs'
-
     const storage = sessionStorage
 
-    async function getConfigs(): Promise<Config[]> {
+    async function getConfigs(): Promise<Config> {
         const cached = getOnStorage()
         if (cached) {
             return Promise.resolve(cached)
@@ -16,46 +13,35 @@ var ConfigService = (function () {
         return fetchConfigs()
     }
 
-    function getOnStorage(): Config[] | null {
+    function getOnStorage(): Config | null {
         const rawConfigs = storage.getItem(configsKey)
         if (!rawConfigs) {
             return  null
         }
-        return fromRawValue(rawConfigs)
-    }
-
-    async function fetchConfigs(): Promise<Config[]> {
-        return getArray(v1Namespace('configs'), jsonKey, Config, (_) => {}, false)
-            .then(configs => setOnStorage(configs))
-    }
-
-    function fromRawValue(rawConfigs: string): Config[] | null {
-        const json = JSON.parse(rawConfigs)
-        let result: Config[] = []
-        for (const config of json[jsonKey]) {
-            try {
-                result.push(parse(config))
-            } catch {
-                return null
-            }
+        const configs = fromRawValue(rawConfigs)
+        if (!configs) {
+            storage.removeItem(configsKey)
         }
-        return result
-    }
-
-    function setOnStorage(configs: Config[]): Config[] {
-        const obj = {
-            [jsonKey]: configs
-        }
-        storage.setItem(configsKey, JSON.stringify(obj))
         return configs
     }
 
-    function parse(configJSON: any): Config {
+    async function fetchConfigs(): Promise<Config> {
+        return get(v1Namespace('configs'), Config, () => {}, false)
+            .then(config => setOnStorage(config))
+    }
+
+    function fromRawValue(rawConfigs: string): Config | null {
+        const jsonConfig = JSON.parse(rawConfigs)
         const config = new Config()
-        if (!config.isValid(configJSON)) {
-            throw new AppError('', 'Invalid Config JSON.')
+        if (!config.isValid(jsonConfig)) {
+            return null
         }
-        return Object.assign(config, configJSON)
+        return Object.assign(config, jsonConfig)
+    }
+
+    function setOnStorage(config: Config): Config {
+        storage.setItem(configsKey, JSON.stringify(config))
+        return config
     }
 
     return {

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 
 import AppContainer from "../../elements/AppContainer/AppContainer";
-import { Config } from "../../../models/Config";
+import { LanguageConfig } from "../../../models/Config";
 import ConfigService from "../../../services/ConfigService";
 import Translator from "../../elements/Translator/Translator";
 import { handleError } from "../../../services/Helpers";
@@ -11,13 +11,13 @@ import { AppError } from "../../../models/AppError";
 import ErrorToast from "../../elements/ErrorToast/ErrorToast";
 
 function ConfigDetails() {
-    const [configs, setConfigs] = useState<Config[]>([])
+    const [configs, setConfigs] = useState<LanguageConfig[]>([])
     const [appError, setAppError] = useState<AppError | null>(null)
 
     useEffect(() => {
         async function fetch() {
             return ConfigService.getConfigs()
-                .then(_configs => setConfigs(_configs))
+                .then(_config => setConfigs(_config.configs))
         }
         fetch()
             .catch((error) => {
@@ -25,7 +25,7 @@ function ConfigDetails() {
             })
     }, [])
 
-    function toTableRow(config: Config) {
+    function toTableRow(config: LanguageConfig) {
         return (
             <TableRow>
                 <TableCell sx={{ color: 'white' }} align="center">{config.language_name}</TableCell>
