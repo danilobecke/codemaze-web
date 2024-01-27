@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, IconButton } from "@mui/material";
+import { HelpOutlineRounded } from "@mui/icons-material";
 
 import Translator from "../../elements/Translator/Translator";
 import { sendFormData, v1Namespace } from "../../../services/ApiService";
@@ -14,6 +15,7 @@ import TestCase from "../../../models/TestCase";
 import AddTaskFields, { AddTaskHandler } from "../../elements/AddTaskFields/AddTaskFields";
 import AppContainer from "../../elements/AppContainer/AppContainer";
 import { AppError } from "../../../models/AppError";
+import TestHelper from "../TestHelper/TestHelper";
 
 function NewTask() {
     const navigate = useNavigate()
@@ -27,6 +29,7 @@ function NewTask() {
     const [outputErrors, setOutputErrors] = useState<boolean[]>([false])
     const [testKindErrors, setTestKindErrors] = useState<boolean[]>([false])
 
+    const [isTestHelperOpen, setIsTestHelperOpen] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [appError, setAppError] = useState<AppError | null>(null)
     const [dismissOnError, setDismissOnError] = useState(false)
@@ -117,6 +120,10 @@ function NewTask() {
         navigate('/groups/' + groupID + '/tasks', { replace: true })
     }
 
+    function showTestsHelp() {
+        setIsTestHelperOpen(true)
+    }
+
     return (
         <div>
             <AppContainer>
@@ -125,7 +132,10 @@ function NewTask() {
                     <Stack direction='row' spacing={6}>
                         <AddTaskFields ref={ref} sx={{ minWidth: '48%' }} />
                         <Stack sx={{ minWidth: '48%' }} direction='column' spacing={2} alignItems='start'>
-                            <Typography variant="h5"><Translator path="new_task.tests" /></Typography>
+                            <Stack direction='row' spacing={0} alignItems='center'>
+                                <Typography variant="h5"><Translator path="new_task.tests" /></Typography>
+                                <IconButton onClick={showTestsHelp}><HelpOutlineRounded fontSize="medium" color="primary"/></IconButton>
+                            </Stack>
                             <Stack sx={{ width: '100%' }} direction='column' alignItems='center' spacing={1}>
                                 {zip3(testInputs.map(element => element.value), testOutputs.map(element => element.value), testKinds.map(element => element.value)).map(toTestCard)}
                             </Stack>
@@ -138,6 +148,7 @@ function NewTask() {
                     </Stack>
                 </Stack>
             </AppContainer>
+            <TestHelper show={isTestHelperOpen} close={() => setIsTestHelperOpen(false)} />
             <Loader show={isLoading} />
             <ErrorToast appError={appError} setAppError={setAppError} onClose={dismissOnError ? dismiss : undefined} />
         </div>

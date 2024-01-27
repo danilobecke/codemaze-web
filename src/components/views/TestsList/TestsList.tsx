@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Button, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { Button, IconButton, List, ListItem, ListItemText, Stack, Typography } from "@mui/material";
+import { HelpOutlineRounded } from "@mui/icons-material";
 
 import Session from "../../../services/Session";
 import Translator from "../../elements/Translator/Translator";
@@ -16,6 +17,7 @@ import TestRow from "../../elements/TestRow/TestRow";
 import AppContainer from "../../elements/AppContainer/AppContainer";
 import { AppError } from "../../../models/AppError";
 import { handleError } from "../../../services/Helpers";
+import TestHelper from "../TestHelper/TestHelper";
 
 function TestsList() {
     const { taskID } = useParams()
@@ -31,6 +33,7 @@ function TestsList() {
 
     const [deletionProps, setDeletionProps] = useState<TestDeletionConfirmationProps | null>(null)
     const [showNewTest, setShowNewTest] = useState(false)
+    const [isTestHelperOpen, setIsTestHelperOpen] = useState(false)
 
     useEffect(() => {
         async function fetch() {
@@ -95,13 +98,19 @@ function TestsList() {
         </ListItem>
     }
 
+    function navigationButtons(): JSX.Element | JSX.Element[] {
+        if (!user || user.role === 'student') {
+            return <></>
+        }
+        return [
+            <Button variant="contained" onClick={newTest}><Translator path="tests.newTest" /></Button>,
+            <IconButton onClick={() => setIsTestHelperOpen(true)}><HelpOutlineRounded fontSize="medium" color="primary"/></IconButton>
+        ]
+    }
+
     return (
         <div>
-            <AppContainer navigationBarChildren={
-                <div>
-                    {!user || user.role === 'student' ? <></> : <Button variant="contained" onClick={newTest}><Translator path="tests.newTest" /></Button>}
-                </div>
-            }>
+            <AppContainer navigationBarChildren={navigationButtons()}>
                 <Stack direction='column' spacing={4}>
                     <Typography variant="h1"><Translator path="tests.title" /></Typography>
                     {
@@ -133,6 +142,7 @@ function TestsList() {
             </AppContainer>
             <TestDeletionConfirmation data={deletionProps} />
             <NewTestCase show={showNewTest} onClose={closeNewTest} />
+            <TestHelper show={isTestHelperOpen} close={() => setIsTestHelperOpen(false)} />
             <Loader show={isLoading} />
             <ErrorToast appError={appError} setAppError={setAppError} />
         </div>
