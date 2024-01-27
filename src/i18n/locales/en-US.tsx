@@ -199,5 +199,10 @@ export default {
             extensions: 'File extensions',
             help: 'Help',
         },
+        test_helper: {
+            title: 'Help',
+            description: 'Download a script to help you create test cases.',
+            download: 'Download',
+        },
     }
 }

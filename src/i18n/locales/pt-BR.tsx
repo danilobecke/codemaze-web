@@ -199,5 +199,10 @@ export default {
             extensions: 'Extensões de arquivo',
             help: 'Ajuda',
         },
+        test_helper: {
+            title: 'Ajuda',
+            description: 'Faça download de um script para auxiliar na criação de testes.',
+            download: 'Download',
+        },
     }
 }

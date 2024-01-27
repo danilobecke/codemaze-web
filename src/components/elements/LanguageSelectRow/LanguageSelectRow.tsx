@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from "react"
 import { FormControl, IconButton, ListItem, ListItemText, MenuItem, Select, SelectChangeEvent, Stack, Typography } from "@mui/material"
 import { RemoveCircleOutlineRounded } from "@mui/icons-material"
 
-import { Config } from "../../../models/Config"
+import { LanguageConfig } from "../../../models/Config"
 import ConfigService from "../../../services/ConfigService"
 import Session from "../../../services/Session"
 import Translator from "../Translator/Translator"
@@ -30,12 +30,12 @@ export default function LanguageSelectRow(props: { position: number, hasError?: 
 }
 
 function LanguageSelect(props: { language: string, setLanguage: (language: string) => void, color: string }) {
-    const [configs, setConfigs] = useState<Config[] | null>(null)
+    const [configs, setConfigs] = useState<LanguageConfig[] | null>(null)
 
     useEffect(() => {
         async function fetch() {
             return ConfigService.getConfigs()
-                .then(_configs => setConfigs(_configs))
+                .then(_config => setConfigs(_config.configs))
         }
         fetch()
             .catch((_) => {
@@ -43,7 +43,7 @@ function LanguageSelect(props: { language: string, setLanguage: (language: strin
             })
     }, [])
 
-    function mapToMenuItem(config: Config) {
+    function mapToMenuItem(config: LanguageConfig) {
         const name = config.language_name
         return <MenuItem value={name}>{name}</MenuItem>
     }
