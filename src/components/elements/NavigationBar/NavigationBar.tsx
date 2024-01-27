@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Avatar, IconButton, Stack } from "@mui/material";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 import Session from "../../../services/Session";
 import Profile from "../../views/Profile/Profile";
 
 import './NavigationBar.css';
 
-function NavigationBar(props: { children?: JSX.Element | JSX.Element[]}) {
+function NavigationBar(props: { children?: JSX.Element | JSX.Element[] }) {
+    const navigate = useNavigate()
     const user = Session.getCurrentUser()
 
     const [isProfileOpen, setIsProfileOpen] = useState(false)
@@ -22,10 +25,21 @@ function NavigationBar(props: { children?: JSX.Element | JSX.Element[]}) {
         setIsProfileOpen(true)
     }
 
+    function canGoBack(): boolean {
+        return window.history.state.idx !== 0
+    }
+
+    function goBack() {
+        navigate(-1)
+    }
+
     return (
         <nav className='NavigationBar'>
             <Stack direction='row' justifyContent='space-between'>
-                { user ? <IconButton sx={{padding: 0}} onClick={showProfile}><Avatar {...stringAvatar(user.name)} /></IconButton> : <div /> }
+                <Stack direction={'row'} justifyContent={'flex-start'} alignItems='center' spacing={1}>
+                    {canGoBack() ? <IconButton onClick={goBack}><ArrowBackIosNewIcon color="primary" /></IconButton> : <></>}
+                    {user ? <IconButton sx={{ padding: 0 }} onClick={showProfile}><Avatar {...stringAvatar(user.name)} /></IconButton> : <div />}
+                </Stack>
                 <Stack direction={'row'} justifyContent={'flex-end'} spacing={1}>
                     {props.children || <></>}
                 </Stack>
