@@ -90,17 +90,30 @@ function TaskDetails() {
         navigate('report')
     }
 
+    const submitCodeButton = <Button variant="contained" onClick={showSubmit}><Translator path="task.submit" /></Button>
+
+    function navigationButtons(): JSX.Element | JSX.Element[] {
+        if (!user) {
+            return <></>
+        }
+        switch (user.role) {
+            case 'manager':
+                return [
+                    submitCodeButton,
+                    <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>
+                ]
+            case 'student':
+                if (task?.isClosed() === true) {
+                    return <></>
+                } else {
+                    return submitCodeButton
+                }
+        }
+    }
+
     return (
         <div>
-            <AppContainer navigationBarChildren={
-                <div>
-                    {!user || user.role === 'student' ?
-                        task?.isClosed() === true ? <></> : <Button variant="contained" onClick={showSubmit}><Translator path="task.submit" /></Button>
-                        :
-                        <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>
-                    }
-                </div>
-            }>
+            <AppContainer navigationBarChildren={navigationButtons()}>
                 <Stack direction='column' spacing={4}>
                     {!task ? null :
                         <div>

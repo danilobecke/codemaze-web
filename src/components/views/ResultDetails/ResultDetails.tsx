@@ -14,12 +14,14 @@ import ResultCard from "../../elements/ResultCard/ResultCard";
 import LinkItem from "../../elements/LinkItem/LinkItem";
 import AppContainer from "../../elements/AppContainer/AppContainer";
 import { AppError } from "../../../models/AppError";
+import Session from "../../../services/Session";
 
 function ResultDetails() {
     const navigate = useNavigate()
     const location = useLocation()
     const locationState = (location.state as {result? : Result});
     const { taskID } = useParams()
+    const user = Session.getCurrentUser()
 
     const openResultsStr = Translator({ path: "result_details.open" })
     const closedResultsStr = Translator({ path: "result_details.closed" })
@@ -85,7 +87,7 @@ function ResultDetails() {
                                 <PercentagePieChart percentageCorrect={result.result_percentage} size={{ width: 375, height: 150 }} />
                             </Stack>
                             <Typography variant="h5"><Translator path="result_details.numberAttempts" arguments={{ number: result.attempt_number }} /></Typography>
-                            <LinkItem onClick={downloadCode} title={downloadCodeStr} />
+                            {!user || user.role !== 'student' ? <></> : <LinkItem onClick={downloadCode} title={downloadCodeStr} /> }
                         </div>
                         {resultSection(openResultsStr, result.open_result_percentage, result.open_results)}
                         {result.closed_result_percentage === null ? null :
