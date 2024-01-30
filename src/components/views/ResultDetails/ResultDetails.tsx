@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { Stack, Typography } from "@mui/material";
 
@@ -17,6 +17,8 @@ import { AppError } from "../../../models/AppError";
 
 function ResultDetails() {
     const navigate = useNavigate()
+    const location = useLocation()
+    const locationState = (location.state as {result? : Result});
     const { taskID } = useParams()
 
     const openResultsStr = Translator({ path: "result_details.open" })
@@ -30,8 +32,14 @@ function ResultDetails() {
 
     useEffect(() => {
         async function fetch() {
-            return get(v1Namespace('tasks/' + taskID + '/results/latest'), Result, setIsLoading)
-                .then(_result => setResult(_result))
+            const result = locationState.result
+            if (result) {
+                return Promise.resolve(result)
+                    .then(_result => setResult(_result))
+            } else {
+                return get(v1Namespace('tasks/' + taskID + '/results/latest'), Result, setIsLoading)
+                    .then(_result => setResult(_result))
+            }
         }
         fetch()
             .catch((error) => {

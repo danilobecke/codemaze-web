@@ -52,7 +52,7 @@ function TaskDetails() {
     function closeSubmit(result?: Result) {
         setIsSubmitCodeOpen(false)
         if (result) {
-            showLatestResult()
+            showLatestResult(result)
         }
     }
 
@@ -78,8 +78,12 @@ function TaskDetails() {
         navigate('tests')
     }
 
-    function showLatestResult() {
-        navigate('result')
+    function showLatestResult(result?: Result) {
+        navigate('result', {
+            state: {
+                result: result
+            }
+        })
     }
 
     function showReport() {
@@ -115,7 +119,7 @@ function TaskDetails() {
                     <List>
                         <Row key='details' text={Translator({ path: 'task.details' })} onClick={showDetails} />
                         <Row key='tests' text={Translator({ path: 'task.tests' })} onClick={showTests} />
-                        {!user || user.role === 'manager' ? null : <Row key='result' text={Translator({ path: 'task.latestResult' })} onClick={showLatestResult} />}
+                        {!user || user.role === 'manager' ? null : <Row key='result' text={Translator({ path: 'task.latestResult' })} onClick={() => showLatestResult()} />}
                         {!user || user.role === 'student' ? null : <Row key='report' text={Translator({ path: 'task.report' })} onClick={showReport} />}
                     </List>
                 </Stack>
