@@ -52,7 +52,7 @@ function TaskDetails() {
     function closeSubmit(result?: Result) {
         setIsSubmitCodeOpen(false)
         if (result) {
-            showLatestResult()
+            showLatestResult(result)
         }
     }
 
@@ -78,25 +78,42 @@ function TaskDetails() {
         navigate('tests')
     }
 
-    function showLatestResult() {
-        navigate('result')
+    function showLatestResult(result?: Result) {
+        navigate('result', {
+            state: {
+                result: result
+            }
+        })
     }
 
     function showReport() {
         navigate('report')
     }
 
+    const submitCodeButton = <Button variant="contained" onClick={showSubmit}><Translator path="task.submit" /></Button>
+
+    function navigationButtons(): JSX.Element | JSX.Element[] {
+        if (!user) {
+            return <></>
+        }
+        switch (user.role) {
+            case 'manager':
+                return [
+                    submitCodeButton,
+                    <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>
+                ]
+            case 'student':
+                if (task?.isClosed() === true) {
+                    return <></>
+                } else {
+                    return submitCodeButton
+                }
+        }
+    }
+
     return (
         <div>
-            <AppContainer navigationBarChildren={
-                <div>
-                    {!user || user.role === 'student' ?
-                        task?.isClosed() === true ? <></> : <Button variant="contained" onClick={showSubmit}><Translator path="task.submit" /></Button>
-                        :
-                        <IconButton sx={{ padding: 0 }} onClick={showSettings}><Settings fontSize="large" sx={{ color: 'white' }} /></IconButton>
-                    }
-                </div>
-            }>
+            <AppContainer navigationBarChildren={navigationButtons()}>
                 <Stack direction='column' spacing={4}>
                     {!task ? null :
                         <div>
@@ -115,7 +132,7 @@ function TaskDetails() {
                     <List>
                         <Row key='details' text={Translator({ path: 'task.details' })} onClick={showDetails} />
                         <Row key='tests' text={Translator({ path: 'task.tests' })} onClick={showTests} />
-                        {!user || user.role === 'manager' ? null : <Row key='result' text={Translator({ path: 'task.latestResult' })} onClick={showLatestResult} />}
+                        {!user || user.role === 'manager' ? null : <Row key='result' text={Translator({ path: 'task.latestResult' })} onClick={() => showLatestResult()} />}
                         {!user || user.role === 'student' ? null : <Row key='report' text={Translator({ path: 'task.report' })} onClick={showReport} />}
                     </List>
                 </Stack>
