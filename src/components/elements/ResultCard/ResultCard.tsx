@@ -43,7 +43,8 @@ function DiffBlock(props: { diff: string }) {
                 if (i < 1) {
                     result[i] = '\\n'
                 } else {
-                    result[i - 1] = result[i - 1] + '\\n'
+                    const lastIndex = result.length - 1
+                    result[lastIndex] = result[lastIndex] + '\\n'
                 }
             }
         }
