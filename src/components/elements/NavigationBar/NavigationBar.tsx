@@ -16,8 +16,10 @@ function NavigationBar(props: { children?: JSX.Element | JSX.Element[] }) {
     const [isProfileOpen, setIsProfileOpen] = useState(false)
 
     function stringAvatar(name: string) {
+        let components = name.split(' ')
+        let lastName = components.slice(-1) ?? components
         return {
-            children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`
+            children: `${components[0][0]}${lastName[0][0]}`
         }
     }
 
