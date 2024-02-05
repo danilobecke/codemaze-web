@@ -1,3 +1,4 @@
+import { UpdatedUser } from "../models/UpdatedUser";
 import { User } from "../models/User";
 
 var Session = (function () {
@@ -39,8 +40,18 @@ var Session = (function () {
         localStorage.removeItem(userKey)
     }
 
+    function updateUser(newUser: UpdatedUser) {
+        let user = getUser()
+        if (!user) {
+            return
+        }
+        Object.assign(user, newUser)
+        setUser(user)
+    }
+
     return {
         getCurrentUser: getUser,
+        updateCurrentUser: updateUser,
         logIn: setUser,
         logOut: logOut
     }

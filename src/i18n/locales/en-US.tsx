@@ -16,6 +16,7 @@ export default {
             cancel: 'Cancel',
             send: 'Send',
             uploadFile: 'Upload File',
+            confirm: 'Confirm',
         },
         sign_up: {
             roleSelectionTitle: 'Select a Role',
@@ -38,6 +39,12 @@ export default {
         },
         profile: {
             logOut: 'Log Out',
+            update: 'Update',
+            changePassword: 'Update Password',
+            name: 'Full Name',
+            currentPassword: 'Current Password',
+            password: 'New Password',
+            passwordConfirmation: 'Confirm Password',
         },
         new_group: {
             title: 'New Group',
