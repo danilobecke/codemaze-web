@@ -13,6 +13,7 @@ Codemaze is an advanced platform specifically designed to enhance the programmin
 5. [Contributing](#contr)
 	1. [Running as debug](#debug)
 1. [Stopping](#stop)
+2. [TODO](#todo)
 1. [License](#lic)
 2. [Technologies](#tech)
 1. [Contact Info](#contact)
@@ -75,6 +76,13 @@ To stop and remove the Docker containers, you can run:
 make stop-deploy # if deploy
 make stop-debug # if debugging
 ```
+
+<a name=todo></a>
+## TODO
+
+### Improvements
+
+- [ ] Avoid duplicate requests
 
 <a name=lic></a>
 ## License
