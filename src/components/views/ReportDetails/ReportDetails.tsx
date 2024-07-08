@@ -51,7 +51,7 @@ function ReportDetails() {
             .catch((error) => {
                 handleError(error, setAppError)
             })
-    }, [taskID])
+    }, [])
 
     function handleChange(event: React.SyntheticEvent, newValue: ReportTab) {
         setSelectedTab(newValue)

@@ -44,7 +44,7 @@ function TestsList() {
             .catch(error => {
                 handleError(error, setAppError)
             })
-    }, [allTests?.open_tests.length, allTests?.closed_tests.length])
+    }, [])
 
     function newTest() {
         setShowNewTest(true)
