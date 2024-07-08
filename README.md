@@ -82,7 +82,7 @@ make stop-debug # if debugging
 
 ### Improvements
 
-- [ ] Avoid duplicate requests
+- [x] Avoid duplicate requests
 
 <a name=lic></a>
 ## License
