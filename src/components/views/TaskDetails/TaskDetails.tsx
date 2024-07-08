@@ -43,7 +43,7 @@ function TaskDetails() {
             .catch((error) => {
                 handleError(error, setAppError)
             })
-    }, [count])
+    }, [])
 
     function showSubmit() {
         setIsSubmitCodeOpen(true)

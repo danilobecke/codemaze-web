@@ -50,7 +50,7 @@ function TasksList() {
             .catch((error) => {
                 handleError(error, setAppError)
             })
-    }, [openTasks.length, closedTasks.length, upcomingTasks.length])
+    }, [])
 
     function sort(lhs: TaskSummary, rhs: TaskSummary) {
         const lhsEndsOn = lhs.endsOn()

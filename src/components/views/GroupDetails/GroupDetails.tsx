@@ -51,7 +51,7 @@ function GroupDetails() {
             .catch((error) => {
                 handleError(error, setAppError)
             })
-    }, [group?.active, group?.name])
+    }, [])
 
     function showSettings() {
         if (!user || user.role === 'student') {

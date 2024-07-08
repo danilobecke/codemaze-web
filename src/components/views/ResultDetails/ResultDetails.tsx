@@ -47,7 +47,7 @@ function ResultDetails() {
             .catch((error) => {
                 handleError(error, setAppError)
             })
-    }, [result?.attempt_number])
+    }, [])
 
     function resultSection(title: string, percentage: number, results: TestCaseResult[]) {
         return (

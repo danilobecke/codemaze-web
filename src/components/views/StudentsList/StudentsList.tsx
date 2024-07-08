@@ -48,7 +48,7 @@ function StudentsList() {
             .catch((error) => {
                 handleError(error, setAppError)
             })
-    }, [groupID, requests.length, students.length])
+    }, [])
 
     function requestToRow(joinRequest: JoinRequest) {
         return (
