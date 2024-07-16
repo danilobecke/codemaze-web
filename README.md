@@ -82,7 +82,7 @@ make stop-debug # if debugging
 
 ### Improvements
 
-- [x] Avoid duplicate requests
+- [ ] Add task title on the report screen
 
 <a name=lic></a>
 ## License
